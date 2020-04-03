@@ -338,6 +338,36 @@
 
   </div>
 
+  <!-- Login -->
+  <h2>Login</h2>
+  <form class="Login">
+    <mat-form-field class="login-full-width">
+      <mat-label>Username</mat-label>
+      <input matInput [formControl]="usernameFormControl" [errorStateMatcher]="matcher"
+            placeholder="Please input username">
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="usernameFormControl.hasError('email') && !usernameFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="usernameFormControl.hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <!--
+    <div class="card card-small">
+      <span>Username: <input type="text" name="username" ng-model="user.name" required></span>
+    </div>
+    -->
+  </form>
+
+  <!--
+  <div class="card-container">
+    <div class="card card-small">
+      <span>Password: <input type="password" name="password" ng-model="user.password" required></span>
+    </div>
+  </div>
+  -->
+
   <!-- Resources -->
   <h2>Resources</h2>
   <p>Here are some links to help you get started:</p>
