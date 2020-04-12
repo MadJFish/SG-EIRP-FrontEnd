@@ -1,14 +1,17 @@
 .navbar {
+    position: fixed;
+    height: 60;
     border: 0;
     border-radius: $border-radius-base;
     padding: 0.625rem 0;
     margin-bottom: 20px;
-    @include navbar-colors($white-color, $navbar-color);
+    @include navbar-colors($bar-color, $navbar-color);
+    border-color: $border-color;
 
     &.fixed-top{
         border-radius: 0;
     }
-
+    
     .navbar-nav{
         .nav-item .nav-link{
             position: relative;
@@ -72,6 +75,20 @@
               background-color: rgba(255, 255, 255, 0.1);
             }
         }
+
+        .logo-img{
+          width: 35px;
+          display: block;
+          height: 35px;
+          left: 5px;
+  
+          img{
+              width: 30px;
+              height: 30px;
+              top: 4px;
+              position: absolute;
+          }
+      }
     }
 
     .btn,

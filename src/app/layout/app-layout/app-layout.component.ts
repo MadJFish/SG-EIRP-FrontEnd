@@ -8,11 +8,11 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
 
 @Component({
-  selector: 'app-admin-layout',
-  templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.scss']
+  selector: 'app-app-layout',
+  templateUrl: './app-layout.component.html',
+  styleUrls: ['./app-layout.component.scss']
 })
-export class AdminLayoutComponent implements OnInit {
+export class AppLayoutComponent implements OnInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
