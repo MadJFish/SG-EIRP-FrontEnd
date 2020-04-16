@@ -20,12 +20,15 @@ export class AuthenticationService {
     }
 
     public get defaultUser(): User {
-        let user = new User(
+        let user = null;
+        /*
+        new User(
             "gy-jerry",
             "12345687",
             "gaoyu.jerry@gmail.com",
             "1234567890"
         );
+        */
         return user;
     }
 

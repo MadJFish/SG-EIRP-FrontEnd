@@ -33,7 +33,10 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             email: ['', Validators.required],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            age: ['', Validators.required],
+            eduLevel: ['', Validators.required],
+            gender: ['', Validators.required]
         });
     }
 
@@ -52,6 +55,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
+        
         this.userService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(

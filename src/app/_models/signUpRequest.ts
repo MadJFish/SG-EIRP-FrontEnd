@@ -1,40 +1,42 @@
-﻿import { MaxLengthValidator } from "@angular/forms";
+import { Address } from "./address";
 
-export class User {
+export class SignUpRequest {
     userId: number;
+    email: string;
     username: string;
     password: string;
     age: number;
     educationLevel: string;
-    email: string;
     gender: string;
     relationShip: string;
     otherRelationShip: string;
     parent: boolean;
     phoneNumber: string;
     studentName: string;
+    address: Address
 
     token: string;
 
     constructor(
+        email: string,
         username: string,
         password: string,
         age: number,
         educationLevel: string,
-        email: string,
         gender: string,
         relationShip: string,
         otherRelationShip: string,
         parent: boolean,
         phoneNumber: string,
         studentName: string,
-        token: string
+        token: string,
+        address: Address
     ) {
+        this.email = email;
         this.username = username;
         this.password = password;
         this.age = age;
         this.educationLevel = educationLevel;
-        this.email = email;
         this.gender = gender;
         this.relationShip = relationShip;
         this.otherRelationShip = otherRelationShip;
@@ -42,5 +44,6 @@ export class User {
         this.phoneNumber = phoneNumber;
         this.studentName = studentName;
         this.token = token;
+        this.address = address;
     }
 }
