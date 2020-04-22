@@ -6,28 +6,38 @@
         <div class="nav-tabs-navigation">
             <div class="nav-tabs-wrapper">
                 <ul class="nav nav-tabs" data-tabs="tabs">
+                    <!--
                     <li class="nav-item">
                         <a mat-button class="nav-link active text-color-black" href="#profile" data-toggle="tab">
-                            <i class="material-icons text-color-black">bug_report</i>
+                            <i class="material-icons text-color-black">dashboard</i>
                             <span class="text-color-black">Dashboard</span>
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a mat-button class="nav-link text-color-black" href="#messages" data-toggle="tab">
-                            <i class="material-icons text-color-black">code</i>
+                            <i class="material-icons text-color-black">content_paste</i>
                             <span class="text-color-black">School Data</span>
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a mat-button class="nav-link text-color-black" href="#settings" data-toggle="tab">
-                            <i class="material-icons text-color-black">cloud</i>
+                            <i class="material-icons text-color-black">library_books</i>
                             <span class="text-color-black">Education Program</span>
                             <div class="ripple-container"></div>
                         </a>
                     </li>
+                    -->
+                    <li routerLinkActive="active" *ngFor="let navItem of navItems" class="{{navItem.class}} nav-item">
+                        <a mat-button class="nav-link text-color-black" [routerLink]="[navItem.path]">
+                            <i class="material-icons text-color-black">{{navItem.icon}}</i>
+                            <span class="text-color-black">{{navItem.title}}</span>
+                            <div class="ripple-container"></div>
+                        </a>
+                    </li>
                 </ul>
+
             </div>
         </div>
         <button mat-raised-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
@@ -81,8 +91,8 @@
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdownMenuLink">
-                        <a class="dropdown-item" href="javascript:void(0)">Profile</a>
-                        <a class="dropdown-item" href="signOut()">Sign Out</a>
+                        <a class="dropdown-item" href="/users-profile">Profile</a>
+                        <a class="dropdown-item" href="/login">Sign Out</a>
                     </div>
                 </li>
             </ul>

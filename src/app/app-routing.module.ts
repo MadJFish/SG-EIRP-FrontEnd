@@ -67,6 +67,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+  {
+    path: 'school',
+    loadChildren: './schools/schools.module#SchoolsModule',
+    data: { showSidebar: false }
+  },
   { path: 'users-profile', loadChildren: './user-profile/user-profile.module#UserProfileModule' },
   {
     path: 'login',

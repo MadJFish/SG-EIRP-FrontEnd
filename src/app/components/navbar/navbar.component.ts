@@ -1,19 +1,18 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
 
-declare interface UserRouteInfo {
+declare const $: any;
+declare interface RouteInfo {
     path: string;
     title: string;
+    icon: string;
     class: string;
 }
-export const USER_ROUTES: UserRouteInfo[] = [
-    { path: '/user-profile', title: 'Profile', class: '' },
-    // { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
-    // { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
-    // { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
-    // { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
+export const ROUTES: RouteInfo[] = [
+    { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
+    { path: '/school', title: 'School Data',  icon:'content_paste', class: '' },
+    { path: '/program', title: 'Education Program',  icon:'library_books', class: '' },
 ];
 
 @Component({
@@ -22,7 +21,7 @@ export const USER_ROUTES: UserRouteInfo[] = [
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    private userDropdown: any[];
+    navItems: any[];
     private listTitles: any[];
     location: Location;
       mobile_menu_visible: any = 0;
@@ -35,6 +34,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit(){
+        this.navItems = ROUTES.filter(navItem => navItem);
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];

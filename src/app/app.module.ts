@@ -7,7 +7,11 @@ import { RouterModule } from '@angular/router';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
-
+/*
+import {
+    AgmCoreModule
+} from '@agm/core';
+*/
 
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
@@ -23,7 +27,12 @@ import { AppRoutingModule } from './app-routing.module';
         HttpClientModule,
         RouterModule.forRoot([]),
         AppRoutingModule,
-        AppLayoutModule
+        AppLayoutModule,
+        /*
+        AgmCoreModule.forRoot({
+          apiKey: ''
+        })
+        */
     ],
     declarations: [
         AppComponent

@@ -1,16 +1,19 @@
 <app-navbar *ngIf="showNavbar"></app-navbar>
-    <div class="main-panel">
-        <div *ngIf="showSidebar" class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
-            <app-sidebar ></app-sidebar>
-            <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div>
-        </div>
-        <router-outlet></router-outlet>
+<div [ngClass]="{
+        'main-panel': showSidebar,
+        'login-panel': !showSidebar
+    }">
+    <div *ngIf="showSidebar" class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+        <app-sidebar ></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div>
+    </div>
+    <router-outlet></router-outlet>
         <!--
         <div *ngIf="isMaps('maps')">
             <app-footer></app-footer>
         </div>
         -->
-    </div>
+</div>
 <!-- Buy-Modal-angular -->
 <!--
 <div class="modal modal-angular fade" id="buy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

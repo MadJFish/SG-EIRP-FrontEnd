@@ -1,0 +1,11 @@
+<div class="sidebar-wrapper left-panel">
+    <ul class="nav">
+        <li *ngFor="let school of schools" class="{{school.class}} nav-item">
+            <a class="nav-link">
+                <i class="material-icons">{{school.icon}}</i>
+                <p>{{school.title}}</p>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="map" class="map"></div>
