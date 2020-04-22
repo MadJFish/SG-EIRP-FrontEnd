@@ -49,14 +49,13 @@ export class LoginComponent implements OnInit {
         this.alertService.clear();
 
         // stop here if form is invalid
-        /*
         if (this.loginForm.invalid) {
             return;
         }
-        */
 
+        // this.alertService.error("test");
         this.loading = true;
-        /*
+
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
@@ -67,7 +66,7 @@ export class LoginComponent implements OnInit {
                     this.alertService.error(error);
                     this.loading = false;
                 });
-        */
+
        this.router.navigateByUrl('/dashboard');
 
     }

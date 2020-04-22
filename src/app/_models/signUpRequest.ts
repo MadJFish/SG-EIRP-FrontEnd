@@ -1,49 +1,35 @@
 import { Address } from "./address";
 
 export class SignUpRequest {
-    userId: number;
-    email: string;
+    userId: string;
     username: string;
     password: string;
-    age: number;
+    email: string;
     educationLevel: string;
+    parent: boolean;
     gender: string;
+    phoneNumber: string;
+    age: number;
+    studentName: string;
     relationShip: string;
     otherRelationShip: string;
-    parent: boolean;
-    phoneNumber: string;
-    studentName: string;
     address: Address
-
     token: string;
 
-    constructor(
-        email: string,
-        username: string,
-        password: string,
-        age: number,
-        educationLevel: string,
-        gender: string,
-        relationShip: string,
-        otherRelationShip: string,
-        parent: boolean,
-        phoneNumber: string,
-        studentName: string,
-        token: string,
-        address: Address
-    ) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.age = age;
-        this.educationLevel = educationLevel;
-        this.gender = gender;
-        this.relationShip = relationShip;
-        this.otherRelationShip = otherRelationShip;
-        this.parent = parent;
-        this.phoneNumber = phoneNumber;
-        this.studentName = studentName;
-        this.token = token;
-        this.address = address;
+    constructor() {
+        this.userId = "";
+        this.username = "";
+        this.password = "";
+        this.email = "";
+        this.educationLevel = "";
+        this.parent = false;
+        this.gender = "MALE";
+        this.phoneNumber = "";
+        this.age = 0;
+        this.studentName = "";
+        this.relationShip = "";
+        this.otherRelationShip = "";
+        this.address = new Address();
+        this.token = "";
     }
 }

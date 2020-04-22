@@ -4,4 +4,7 @@ interface NodeModule {
   id: string;
 }
 
-declare var config: any;
+declare var config: Config;
+interface Config {
+  apiUrl: string;
+}

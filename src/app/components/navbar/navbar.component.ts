@@ -1,7 +1,20 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
+
+declare interface UserRouteInfo {
+    path: string;
+    title: string;
+    class: string;
+}
+export const USER_ROUTES: UserRouteInfo[] = [
+    { path: '/user-profile', title: 'Profile', class: '' },
+    // { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
+    // { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
+    // { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
+    // { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
+];
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +22,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+    private userDropdown: any[];
     private listTitles: any[];
     location: Location;
       mobile_menu_visible: any = 0;
@@ -121,6 +135,10 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Login';
+    }
+
+    viewProfile(){
+        console.log("test 456");
     }
 
     signOut(){

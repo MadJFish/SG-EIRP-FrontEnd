@@ -58,8 +58,8 @@ export const AppLayoutRoutes: Routes = [
     //     }]
     // }
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    // { path: 'login',      component: LoginComponent },
-    // { path: 'register', component: RegisterComponent },
+    { path: 'login',      component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
@@ -69,6 +69,6 @@ export const AppLayoutRoutes: Routes = [
     //{ path: 'notifications',  component: NotificationsComponent },
     //{ path: 'upgrade',        component: UpgradeComponent },
 
-    // otherwise redirect to home
-    { path: '**', redirectTo: 'login' }
+    // otherwise redirect to dashboard
+    { path: '**', redirectTo: 'dashboard' }
 ];

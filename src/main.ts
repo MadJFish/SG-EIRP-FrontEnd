@@ -8,4 +8,7 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+
+// config.apiUrl = 'http://ec2-13-250-119-52.ap-southeast-1.compute.amazonaws.com/api/';

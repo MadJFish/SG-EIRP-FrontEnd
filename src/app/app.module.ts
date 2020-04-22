@@ -8,17 +8,11 @@ import { RouterModule } from '@angular/router';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 
-import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
 
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { AlertComponent } from './_components';
-
-import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
+import { AppLayoutModule } from './layout/app-layout/app-layout.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
     imports: [
@@ -27,16 +21,12 @@ import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
         ReactiveFormsModule,
         HttpModule,
         HttpClientModule,
-        RouterModule,
+        RouterModule.forRoot([]),
         AppRoutingModule,
-        ComponentsModule
+        AppLayoutModule
     ],
     declarations: [
-        AppComponent,
-        AppLayoutComponent,
-        // HomeComponent,
-        // RegisterComponent,
-       // AlertComponent
+        AppComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -47,4 +37,4 @@ import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { };
+export class AppModule { }; 
