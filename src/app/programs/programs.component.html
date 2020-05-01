@@ -1,78 +1,125 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8 ml-auto mr-auto">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Material Dashboard PRO Angular</h4>
-                        <p class="card-category">Are you looking for more components? Please check our Premium Version of Material Dashboard Angular.</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive table-upgrade">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="text-center">Free</th>
-                                        <th class="text-center">PRO</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Components</td>
-                                        <td class="text-center">60</td>
-                                        <td class="text-center">200</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Plugins</td>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">15</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Example Pages</td>
-                                        <td class="text-center">3</td>
-                                        <td class="text-center">27</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Login, Register, Pricing, Lock Pages</td>
-                                        <td class="text-center"><i class="fa fa-times text-danger"></i></td>
-                                        <td class="text-center"><i class="fa fa-check text-success"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>DataTables, VectorMap, SweetAlert, Wizard, jQueryValidation, FullCalendar etc...</td>
-                                        <td class="text-center"><i class="fa fa-times text-danger"></i></td>
-                                        <td class="text-center"><i class="fa fa-check text-success"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mini Sidebar</td>
-                                        <td class="text-center"><i class="fa fa-times text-danger"></i></td>
-                                        <td class="text-center"><i class="fa fa-check text-success"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Premium Support</td>
-                                        <td class="text-center"><i class="fa fa-times text-danger"></i></td>
-                                        <td class="text-center"><i class="fa fa-check text-success"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td class="text-center">Free</td>
-                                        <td class="text-center">Just $59</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center"></td>
-                                        <td class="text-center">
-                                            <a href="javascript:void(0)" class="btn btn-round btn-fill btn-default disabled">Current Version</a>
-                                        </td>
-                                        <td class="text-center">
-                                            <a target="_blank" href="https://www.creative-tim.com/product/material-dashboard-pro-angular2?ref=md-free-angular-upgrade-live" class="btn btn-round btn-fill btn-info">Upgrade to PRO</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="container-fluid">
+      <div class="card">
+          <div class="card-header card-header-danger">
+              <h3 class="card-title">Education Programs</h3>
+              <p class="card-category">Please search and select your preferred programs
+                  <!--
+                  <a target="_blank" href="https://github.com/mouse0270">Robert McIntosh</a>. Please checkout the
+                  <a href="http://bootstrap-notify.remabledesigns.com/" target="_blank">full documentation.</a>
+                  -->
+              </p>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-6">
+                      <h4 class="card-title">Program Style</h4>
+                      <div class="alert alert-info">
+                          <span>This is a plain notification</span>
+                      </div>
+                      <div class="alert alert-info">
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span>This is a notification with close button.</span>
+                      </div>
+                      <div class="alert alert-info alert-with-icon" data-notify="container">
+                          <i class="material-icons" data-notify="icon">add_alert</i>
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span data-notify="message">This is a notification with close button and icon.</span>
+                      </div>
+                      <div class="alert alert-info alert-with-icon" data-notify="container">
+                          <i class="material-icons" data-notify="icon">add_alert</i>
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span data-notify="message">This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.</span>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <h4 class="card-title">Program states</h4>
+                      <div class="alert alert-info">
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span>
+                              <b> Info - </b> This is a regular notification made with ".alert-info"</span>
+                      </div>
+                      <div class="alert alert-success">
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span>
+                              <b> Success - </b> This is a regular notification made with ".alert-success"</span>
+                      </div>
+                      <div class="alert alert-warning">
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span>
+                              <b> Warning - </b> This is a regular notification made with ".alert-warning"</span>
+                      </div>
+                      <div class="alert alert-danger">
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span>
+                              <b> Danger - </b> This is a regular notification made with ".alert-danger"</span>
+                      </div>
+                      <div class="alert alert-primary">
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span>
+                              <b> Primary - </b> This is a regular notification made with ".alert-primary"</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="places-buttons">
+                  <div class="row">
+                      <div class="col-md-6 ml-auto mr-auto text-center">
+                          <h4 class="card-title">
+                              Notifications Places
+                              <p class="category">Click to view notifications</p>
+                          </h4>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <button mat-raised-button class="btn btn-danger btn-block" (click)="showNotification('top','left')">Top Left</button>
+                              </div>
+                              <div class="col-md-4">
+                                  <button mat-raised-button class="btn btn-danger btn-block" (click)="showNotification('top','center')">Top Center</button>
+                              </div>
+                              <div class="col-md-4">
+                                  <button mat-raised-button class="btn btn-danger btn-block" (click)="showNotification('top','right')">Top Right</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <button mat-raised-button class="btn btn-danger btn-block" (click)="showNotification('bottom','left')">Bottom Left</button>
+                              </div>
+                              <div class="col-md-4">
+                                  <button mat-raised-button class="btn btn-danger btn-block" (click)="showNotification('bottom','center')">Bottom Center</button>
+                              </div>
+                              <div class="col-md-4">
+                                  <button mat-raised-button class="btn btn-danger btn-block" (click)="showNotification('bottom','right')">Bottom Right</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>

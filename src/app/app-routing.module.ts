@@ -72,7 +72,16 @@ const routes: Routes = [
     loadChildren: './schools/schools.module#SchoolsModule',
     data: { showSidebar: false }
   },
-  { path: 'users-profile', loadChildren: './user-profile/user-profile.module#UserProfileModule' },
+  {
+    path: 'users-profile',
+    loadChildren: './user-profile/user-profile.module#UserProfileModule',
+    data: { showSidebar: false }
+  },
+  {
+    path: 'program',
+    loadChildren: './programs/programs.module#ProgramsModule',
+    data: { showSidebar: false }
+  },
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
@@ -82,6 +91,16 @@ const routes: Routes = [
     path: 'register',
     loadChildren: './register/register.module#RegistrationModule',
     data: { showNavbar: false, showSidebar: false }
+  },
+  {
+    path: 'trainer',
+    loadChildren: './trainers/trainers/trainers.module#TrainersModule',
+    data: { showSidebar: false }
+  },
+  {
+    path: 'add-trainer',
+    loadChildren: './trainers/add-trainer/add-trainer.module#AddTrainerModule',
+    data: { showSidebar: false }
   }
 ];
 

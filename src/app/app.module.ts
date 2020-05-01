@@ -35,7 +35,7 @@ import { AppRoutingModule } from './app-routing.module';
         */
     ],
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
