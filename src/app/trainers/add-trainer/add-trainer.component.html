@@ -7,16 +7,18 @@
       <div class="row">
         <div class="col-md-6 card-space">
           <div class="card-profile-image">
-            <a href="javascript:void(0)">
-              <img class="img" src="./assets/img/default/school.png" ng2FileSelect [uploader]="uploader"/>
+            <a (click) = "fileInput.click()">
+              <img class="img" [src]="imagePath" ng2FileSelect [uploader]="uploader"/>
             </a>
           </div>
-          <input class="image-selector" type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+          <input style="display: none" name="uploader" type="file" ng2FileSelect [uploader]="uploader" (change)="onFileChanged(uploader)" #fileInput/>
+          <!--
           <button type="button" class="btn btn-success btn-s image-selector"
             (click)="uploader.uploadAll()"
             [disabled]="!uploader.getNotUploadedItems().length">
             Upload an Image
           </button>
+          -->
         </div>
         <div class="card-content col-md-6">
           <form [formGroup]="addAgentForm" (ngSubmit)="onSubmit()">
@@ -69,8 +71,8 @@
                 <input-header for="targetEducationLevels">Target Education Levels:</input-header>
                 <div class="checkbox-area">
                   <div *ngFor="let educationLevel of educationLevels" class="checkbox-option row">
-                    <input type="checkbox" [checked]="[educationLevel.isChecked]" (change)="changeHandler($event)" formControlName="targetEducationLevels" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.targetEducationLevels.errors }" />
-                    <span>{{educationLevel.name}}</span>
+                    <input type="checkbox" ng-checked="{{educationLevel.isChecked}}" (change)="changeHandler([educationLevel], 'EducationLevel')" formControlName="targetEducationLevels" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.targetEducationLevels.errors }" />
+                    <span>{{educationLevel.description}}</span>
                   </div>
                 </div>
               </div>
@@ -80,8 +82,8 @@
                 <input-header for="subjects">Subjects:</input-header>
                 <div class="checkbox-area">
                   <div *ngFor="let subject of subjects" class="checkbox-option row">
-                    <input type="checkbox" [checked]="[subject.isChecked]" (change)="changeHandler($event)" formControlName="subjects" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subjects.errors }" />
-                    <span>{{subject.name}}</span>
+                    <input type="checkbox" ng-checked="{{subject.isChecked}}" (change)="changeHandler([subject], 'Subject')" formControlName="subjects" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subjects.errors }" />
+                    <span>{{subject.description}}</span>
                   </div>
                 </div>
               </div>

@@ -14,6 +14,6 @@ import { AddTrainerComponent } from './add-trainer.component';
   declarations: [
     AddTrainerComponent,
     FileSelectDirective,
-  ]
+  ],
 })
 export class AddTrainerModule { }
