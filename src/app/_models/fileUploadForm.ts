@@ -1,4 +1,4 @@
-import { DocumentDto } from "./documentDto";
+import { DocumentDto } from "./document";
 import { FileLikeObject, FileItem } from "ng2-file-upload";
 
 export class FileUploadForm {

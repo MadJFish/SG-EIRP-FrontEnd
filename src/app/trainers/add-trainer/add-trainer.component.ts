@@ -5,7 +5,7 @@ import { CodeService } from '../../_services/code.service';
 import { GloblConstants } from '../../common/global-constants';
 import { Code } from 'app/_models/code';
 import { FileUploadForm } from 'app/_models/fileUploadForm';
-import { DocumentDto } from 'app/_models/documentDto';
+import { DocumentDto } from 'app/_models/document';
 import { fileUploadService } from 'app/_services/fileUpload.service';
 
 const UploadURL = 'http://localhost:8080/api/document/upload';

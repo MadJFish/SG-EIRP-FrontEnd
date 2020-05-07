@@ -23,9 +23,9 @@ export class LoginComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private alertService: AlertService
     ) {
-        // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
-            this.router.navigate(['/']);
+        // redirect to dashboard if already logged in
+        if (this.authenticationService.currentAccessTokenValue) {
+            this.router.navigate(['/dashboard']);
         }
     }
 
@@ -60,14 +60,17 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    alert("login successfully: " + JSON.stringify(data));
+                    // this.router.navigate([this.returnUrl]);
+                    this.router.navigate(['/dashboard']);
                 },
                 error => {
+                    alert("login failed: " + error.toString());
                     this.alertService.error(error);
                     this.loading = false;
                 });
 
-       this.router.navigateByUrl('/dashboard');
+       // this.router.navigateByUrl('/dashboard');
 
     }
 }

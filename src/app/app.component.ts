@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { AuthenticationService } from './_services';
-import { User } from './_models';
+import { User, AccessToken } from './_models';
 
 import './_content/app.less';
 
@@ -14,14 +14,14 @@ import './_content/app.less';
 export class AppComponent implements OnInit {
     showNavbar = false;
     showSidebar = false;
-    currentUser: User;
+    currentToken: AccessToken;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService
     ) {
-        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+        this.authenticationService.currentAccessToken.subscribe(x => this.currentToken = x);
     }
 
     ngOnInit() {

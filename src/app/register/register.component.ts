@@ -25,8 +25,8 @@ export class RegisterComponent implements OnInit {
         private alertService: AlertService
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
-            this.router.navigate(['/']);
+        if (this.authenticationService.currentAccessTokenValue) {
+            this.router.navigate(['/dashboard']);
         }
     }
 

@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { FileUploadForm } from '../_models/fileUploadForm';
 import { GloblConstants } from '../common/global-constants';
-import { DocumentDto } from 'app/_models/documentDto';
+import { DocumentDto } from 'app/_models/document';
 
 const uploadImageURL : string = GloblConstants.apiURL + "document/upload";
 

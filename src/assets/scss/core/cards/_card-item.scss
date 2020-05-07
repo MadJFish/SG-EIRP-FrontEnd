@@ -1,0 +1,33 @@
+.card-item {
+    margin: 10px;
+    max-width: 400px;
+
+    .card-item-image {
+        margin: 15px 15px;
+        border-radius: 10px;
+        overflow: hidden;
+        max-width: 370px;
+        max-height: 370px;
+    }
+
+    .card-item-title {
+        margin: 0px 15px 10px 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .card-item-text {
+        margin: 0px 15px 0px 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .card-item-description {
+        margin: 15px 15px 10px 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}

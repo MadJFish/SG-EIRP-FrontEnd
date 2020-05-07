@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { User } from '../_models';
+import { User, AccessToken } from '../_models';
 import { UserService, AuthenticationService } from '../_services';
 
 @Component({
@@ -10,14 +10,14 @@ import { UserService, AuthenticationService } from '../_services';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    currentUser: User;
+    currentToken: AccessToken;
     users = [];
 
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService
     ) {
-        this.currentUser = this.authenticationService.currentUserValue;
+        this.currentToken = this.authenticationService.currentAccessTokenValue;
     }
 
     ngOnInit() {

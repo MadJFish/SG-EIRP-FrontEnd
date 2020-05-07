@@ -101,6 +101,11 @@ const routes: Routes = [
     path: 'add-trainer',
     loadChildren: './trainers/add-trainer/add-trainer.module#AddTrainerModule',
     data: { showSidebar: false }
+  },
+  {
+    path: 'trainer-profile',
+    loadChildren: './trainers/trainer-profiles/trainer-profiles.module#TrainerProfilesModule',
+    data: { showSidebar: false }
   }
 ];
 
