@@ -24,10 +24,12 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let agent of agents">
-                      <td>{{agent.body.username}}</td>
-                      <td>{{agent.body.email}}</td>
-                      <td>{{agent.body.address}}</td>
-                      <td>{{agent.body.status}}</td>
+                      <td>{{agent.username}}</td>
+                      <td>{{agent.email}}</td>
+                      <td>{{agent.address}}</td>
+                      <td>{{agent.status}}</td>
+                      <td *ngIf="agent.status != 'APPROVED'"><button type="Approve" class="btn btn-primary" (click)="approve(agent.username)" 
+                        onClick="window.location.reload();">Approve</button></td>
                     </tr>
                   </tbody>
                   </table>
