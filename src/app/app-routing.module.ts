@@ -106,7 +106,13 @@ const routes: Routes = [
     path: 'trainer-profile',
     loadChildren: './trainers/trainer-profiles/trainer-profiles.module#TrainerProfilesModule',
     data: { showSidebar: false }
+  },
+  {
+    path: 'tutor-agent',
+    loadChildren: './tutor-agent/tutor-agent.module#TutorAgentModule',
+    data: { showSidebar: false }
   }
+
 ];
 
 @NgModule({

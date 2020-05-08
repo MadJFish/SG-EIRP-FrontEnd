@@ -1,8 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 
 export class GloblConstants {
-    public static apiURL: string = "http://localhost:8080";
-    public static serviceURL: string = "http://localhost:8082";
+
+    //public static apiURL: string = "http://localhost:8080";
+
+    public static apiURL: string = "http://sg-eirp-lb-1490246461.ap-southeast-1.elb.amazonaws.com/eirp-user";
+    public static serviceURL: string = "http://sg-eirp-lb-1490246461.ap-southeast-1.elb.amazonaws.com/eirp-tutor/";
+
+    
     
     // POST
     public static loginURL: string = "/oauth/token";
@@ -18,7 +23,7 @@ export class GloblConstants {
 
     public static httpOptions = {
         headers: new HttpHeaders({
-          'Content-Type':  'application/json'
+          'Content-Type':  'application/json',
         })
     };
 }

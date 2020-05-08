@@ -18,6 +18,10 @@ import { AppComponent } from './app.component';
 import { AppLayoutModule } from './layout/app-layout/app-layout.module';
 import { AppRoutingModule } from './app-routing.module';
 
+import { HttpHeaders } from '@angular/common/http';
+//import { TutorAgentComponent } from './tutor-agent/tutor-agent.component';
+
+
 @NgModule({
     imports: [
         BrowserAnimationsModule,
@@ -36,6 +40,7 @@ import { AppRoutingModule } from './app-routing.module';
     ],
     declarations: [
         AppComponent,
+        //TutorAgentComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

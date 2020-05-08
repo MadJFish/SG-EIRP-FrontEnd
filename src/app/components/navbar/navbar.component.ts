@@ -14,6 +14,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/school', title: 'School Data',  icon:'content_paste', class: '' },
     { path: '/program', title: 'Education Program',  icon:'library_books', class: '' },
     { path: '/trainer', title: 'Trainer Data', icon:'person', class: '' },
+    { path: '/tutor-agent', title: 'Tutor Agent', icon:'bubble_chart', class: '' },
 ];
 
 @Component({

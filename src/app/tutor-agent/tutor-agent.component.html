@@ -8,8 +8,8 @@
             <div class="card" style = "width:55%">
 
               <div class="card-header card-header-danger">
-                <h4 class="card-title "> School Data Batch Job Status</h4>
-                <p class="card-category">Data is retrieved from data.gov.sg/dataset/school-directory-and-information </p>
+                <h4 class="card-title "> Tutor Agent Approval </h4>
+                <p class="card-category">Choose the below tutor agent and select the approval button </p>
               </div>
 
               <div class="card-body">
@@ -17,15 +17,17 @@
 
                   <table class="table" >
                     <thead class=" text-primary">
-                    <th>ID</th>
-                    <th>Execution Date Time</th>
-                    <th>Execution Outcome</th>
+                    <th>Agent Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Status</th>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let task of tasks">
-                      <td>{{task.id}}</td>
-                      <td>{{task.exeTime}}</td>
-                      <td>{{task.outcome}}</td>
+                    <tr *ngFor="let agent of agents">
+                      <td>{{agent.body.username}}</td>
+                      <td>{{agent.body.email}}</td>
+                      <td>{{agent.body.address}}</td>
+                      <td>{{agent.body.status}}</td>
                     </tr>
                   </tbody>
                   </table>
