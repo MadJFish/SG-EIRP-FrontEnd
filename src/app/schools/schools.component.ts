@@ -22,10 +22,13 @@ export class SchoolsComponent implements OnInit {
 
     tasks: object;
     token: any;
+    gov_data_task_url:string;
+
 
   constructor(private http: HttpClient) {
     this.tasks = [];
     this.token = JSON.parse(localStorage.getItem(GloblConstants.currentAccessToken))['access_token'];
+    this.gov_data_task_url = GloblConstants.schoolURL + GloblConstants.SchDataTaskURL;
 
   }
 
@@ -37,7 +40,7 @@ export class SchoolsComponent implements OnInit {
       'Authorization': 'Bearer ' + this.token
    });
 
-    this.http.get<Object>('http://sg-eirp-lb-1490246461.ap-southeast-1.elb.amazonaws.com/eirp-school/api/govDataTask/all', { headers: reqHeader }).subscribe(
+    this.http.get<Object>(this.gov_data_task_url, { headers: reqHeader }).subscribe(
         data => {
           this.tasks =data;
         });

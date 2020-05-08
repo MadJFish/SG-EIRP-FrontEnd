@@ -22,40 +22,42 @@ export class TutorAgentComponent implements OnInit {
 
   agents: any;
   token: any;
+  agent_list_url:string;
+  agent_approval_url: string;
 
   constructor(private http: HttpClient) { 
     this.agents = [];
     this.token = JSON.parse(localStorage.getItem(GloblConstants.currentAccessToken))['access_token'];
+    this.agent_list_url = GloblConstants.apiURL + GloblConstants.TutorAgentListURL;
 
+    this.agent_approval_url = GloblConstants.apiURL + GloblConstants.TutorAgentApprovalURL;
+
+    console.log(this.agent_list_url);
   }
 
   approve(value:string) {
 
-    console.log (value);
     let bodyString = JSON.stringify({ username: value, status: "APPROVED" });
-    console.log(bodyString);
 
     let reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.token
    });
 
-    this.http.post("http://sg-eirp-lb-1490246461.ap-southeast-1.elb.amazonaws.com/eirp-user/api/users/tutor/status", bodyString, {headers: reqHeader})
+    this.http.post(this.agent_approval_url, bodyString, {headers: reqHeader})
       .subscribe(res => console.log(res));
-  
-    
+
   }
 
-
   ngOnInit(): void {
-    console.log(this.token);
+    //console.log(this.token);
 
     let reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.token
    });
 
-    this.http.get<Object>('http://sg-eirp-lb-1490246461.ap-southeast-1.elb.amazonaws.com/eirp-user/api/users/tutor/list', { headers: reqHeader }).subscribe(
+    this.http.get<Object>(this.agent_list_url, { headers: reqHeader }).subscribe(
         data => {
           this.agents =data['body'];
           console.log(data['body']);
