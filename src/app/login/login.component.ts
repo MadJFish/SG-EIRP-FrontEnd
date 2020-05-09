@@ -5,6 +5,9 @@ import { first } from 'rxjs/operators';
 
 import { AlertService, AuthenticationService } from '../_services';
 
+import { HttpClientModule, HttpHandler, HttpHeaders } from '@angular/common/http';
+
+
 @Component({
     selector: 'app-login',
     templateUrl: 'login.component.html',
@@ -15,13 +18,14 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     returnUrl: string;
-
+    
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private alertService: AlertService
+        private alertService: AlertService,
+
     ) {
         // redirect to dashboard if already logged in
         if (this.authenticationService.isAuthenticated()) {
@@ -44,6 +48,7 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
+
 
         // reset alerts on submit
         this.alertService.clear();

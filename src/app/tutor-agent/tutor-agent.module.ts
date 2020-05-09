@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
-import { SchoolsRoutingModule } from './schools-routing.module';
-import { SchoolsComponent } from './schools.component';
+import { TutorAgentRoutingModule } from './tutor-agent-routing.module';
+import { TutorAgentComponent } from './tutor-agent.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SchoolsRoutingModule,
+    TutorAgentRoutingModule,
     HttpClientModule
   ],
-  declarations: [SchoolsComponent],
+  declarations: [TutorAgentComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -22,4 +22,4 @@ import { SchoolsComponent } from './schools.component';
     HttpClientModule
   ]
 })
-export class SchoolsModule { }
+export class TutorAgentModule { }

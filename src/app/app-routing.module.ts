@@ -119,8 +119,15 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'tutor-agent',
+    loadChildren: './tutor-agent/tutor-agent.module#TutorAgentModule',
+    data: { showSidebar: false },
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: '/login',
+    data: { showSidebar: false },
     canActivate: [AuthGuard]
   }
 ];
