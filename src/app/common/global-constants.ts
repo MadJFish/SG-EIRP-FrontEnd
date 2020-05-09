@@ -24,9 +24,9 @@ export class GloblConstants {
 
     // GET
     public static getCodeByTypeUrl: string = "/api/code/getByType";
-    public static TutorAgentListURL: string = "/api/users/tutor/list";
-    public static TutorAgentApprovalURL: string = "/api/users/tutor/status";
-    public static SchDataTaskURL: string = "/api/govDataTask/all";   
+    public static TutorAgentListUrl: string = "/api/users/tutor/list";
+    public static TutorAgentApprovalUrl: string = "/api/users/tutor/status";
+    public static SchDataTaskUrl: string = "/api/govDataTask/all";   
 
     // Constants
     public static educationLevelCodeType: string = "EducationLevel";

@@ -28,7 +28,7 @@ export class SchoolsComponent implements OnInit {
   constructor(private http: HttpClient) {
     this.tasks = [];
     this.token = JSON.parse(localStorage.getItem(GloblConstants.currentAccessToken))['access_token'];
-    this.gov_data_task_url = GloblConstants.schoolURL + GloblConstants.SchDataTaskURL;
+    this.gov_data_task_url = GloblConstants.baseUrl + GloblConstants.schoolUrl + GloblConstants.SchDataTaskUrl;
 
   }
 

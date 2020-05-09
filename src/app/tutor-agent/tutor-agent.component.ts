@@ -24,20 +24,21 @@ export class TutorAgentComponent implements OnInit {
   token: any;
   agent_list_url:string;
   agent_approval_url: string;
+  static APPROVED_STATUS = "APPROVED";
+  static REJECTED_STATUS = "REJECTED";
 
   constructor(private http: HttpClient) { 
     this.agents = [];
     this.token = JSON.parse(localStorage.getItem(GloblConstants.currentAccessToken))['access_token'];
-    this.agent_list_url = GloblConstants.apiURL + GloblConstants.TutorAgentListURL;
+    this.agent_list_url = GloblConstants.baseUrl +GloblConstants.userUrl + GloblConstants.TutorAgentListUrl;
 
-    this.agent_approval_url = GloblConstants.apiURL + GloblConstants.TutorAgentApprovalURL;
-
-    console.log(this.agent_list_url);
+    this.agent_approval_url = GloblConstants.baseUrl +GloblConstants.userUrl + GloblConstants.TutorAgentApprovalUrl;
+  
   }
 
   approve(value:string) {
 
-    let bodyString = JSON.stringify({ username: value, status: "APPROVED" });
+    let bodyString = JSON.stringify({ username: value, status: TutorAgentComponent.APPROVED_STATUS });
 
     let reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
@@ -47,7 +48,28 @@ export class TutorAgentComponent implements OnInit {
     this.http.post(this.agent_approval_url, bodyString, {headers: reqHeader})
       .subscribe(res => console.log(res));
 
+    //must load twice, then table can reload
+    this.ngOnInit();
+    this.ngOnInit();
   }
+
+  reject(value:string) {
+
+    let bodyString = JSON.stringify({ username: value, status: TutorAgentComponent.REJECTED_STATUS });
+
+    let reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token
+   });
+
+    this.http.post(this.agent_approval_url, bodyString, {headers: reqHeader})
+      .subscribe(res => console.log(res));
+
+    //must load twice, then table can reload
+    this.ngOnInit();
+    this.ngOnInit();
+  }
+
 
   ngOnInit(): void {
     //console.log(this.token);

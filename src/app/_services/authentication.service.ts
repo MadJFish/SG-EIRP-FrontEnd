@@ -85,6 +85,7 @@ export class AuthenticationService {
                 this.currentAccessTokenSubject.next(<AccessToken> <unknown> accessToken);
                 return accessToken;
             }));
+
     }
 
     logout() {
