@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '../_services';
-import { SignUpRequest } from 'app/_models/signUpRequest';
+import { GloblConstants } from 'app/common/global-constants';
+import { TutorEnrollRequestDto } from 'app/_models/_agencyAndProgram/tutorAgency';
 
 @Component({
     selector: 'app-register',
@@ -34,8 +35,29 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             email: ['', Validators.required],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            firstName: [''],
+            lastName: [''],
+            agencyName: ['', Validators.required],
+            phone: ['']
         });
+
+        let storedValue = localStorage.getItem(GloblConstants.registrationForm);
+        var obj = JSON.parse(storedValue);
+
+
+        console.log(storedValue);
+
+        // load saved temperary registration form values if it exists
+        if (storedValue) {
+            this.registerForm.controls["email"].setValue(obj.email);
+            this.registerForm.controls["username"].setValue(obj.username);
+            this.registerForm.controls["password"].setValue(obj.password);
+            this.registerForm.controls["firstName"].setValue(obj.firstName);
+            this.registerForm.controls["lastName"].setValue(obj.lastName);
+            this.registerForm.controls["agencyName"].setValue(obj.agencyName);
+            this.registerForm.controls["phone"].setValue(obj.phone);
+        }
     }
 
     // convenience getter for easy access to form fields
@@ -54,16 +76,31 @@ export class RegisterComponent implements OnInit {
 
         this.loading = true;
 
-        this.userService.register(this.registerForm.value)
+        // Save the inputs of registration form as temperary stored data
+        localStorage.setItem(GloblConstants.registrationForm, JSON.stringify(this.registerForm.value));
+
+        // parse the register form to tutor enroll request
+        let request: TutorEnrollRequestDto = new TutorEnrollRequestDto();
+        request.setValue(this.registerForm.value);
+
+        console.log("request: " + JSON.stringify(request));
+        this.userService.register(request)
             .pipe(first())
             .subscribe(
                 data => {
                     this.alertService.success('Registration successful', true);
+                    // clean local temp storage for sign up data
+                    localStorage.removeItem(GloblConstants.registrationForm);
                     this.router.navigate(['/login']);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
                 });
+
+            /*
+            ,
+                (error: HttpResponse<any>) => {
+                    this.alertService.error(error.body);
+                    console.log("error: " + error);
+                    this.loading = false;
+                }
+            */
     }
 }

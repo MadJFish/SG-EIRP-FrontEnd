@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 /*
@@ -40,7 +42,10 @@ import { AppRoutingModule } from './app-routing.module';
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+        {
+            provide: JWT_OPTIONS, useValue: JWT_OPTIONS
+        },
+        JwtHelperService,
         // provider used to create fake backend
         fakeBackendProvider
     ],

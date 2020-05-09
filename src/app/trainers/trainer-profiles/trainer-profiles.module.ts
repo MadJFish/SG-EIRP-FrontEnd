@@ -11,4 +11,4 @@ import { TrainerProfilesComponent } from './trainer-profiles.component';
   ],
   declarations: [TrainerProfilesComponent]
 })
-export class TrainersModule { }
+export class TrainerProfilesModule { }

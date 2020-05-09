@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
+
+import { AuthGuard } from './_helpers';
 // import { CommonModule, } from '@angular/common';
 // import { BrowserModule  } from '@angular/platform-browser';
 
@@ -61,51 +63,65 @@ const routes: Routes =[
 //];
 
 const routes: Routes = [
-  {
-    path: '',
+  { path: '',
     redirectTo: '/login',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
-  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+  { path: 'dashboard',
+    loadChildren: './dashboard/dashboard.module#DashboardModule',
+    canActivate: [AuthGuard]
+  },
   {
     path: 'school',
     loadChildren: './schools/schools.module#SchoolsModule',
-    data: { showSidebar: false }
+    data: { showSidebar: false },
+    canActivate: [AuthGuard]
   },
   {
     path: 'users-profile',
     loadChildren: './user-profile/user-profile.module#UserProfileModule',
-    data: { showSidebar: false }
+    data: { showSidebar: false },
+    canActivate: [AuthGuard]
   },
   {
     path: 'program',
     loadChildren: './programs/programs.module#ProgramsModule',
-    data: { showSidebar: false }
+    data: { showSidebar: false },
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
-    data: { showNavbar: false, showSidebar: false }
+    data: { showNavbar: false, showSidebar: false },
   },
   {
     path: 'register',
     loadChildren: './register/register.module#RegistrationModule',
-    data: { showNavbar: false, showSidebar: false }
+    data: { showNavbar: false, showSidebar: false },
   },
   {
     path: 'trainer',
     loadChildren: './trainers/trainers/trainers.module#TrainersModule',
-    data: { showSidebar: false }
+    data: { showSidebar: false },
+    canActivate: [AuthGuard]
   },
   {
     path: 'add-trainer',
     loadChildren: './trainers/add-trainer/add-trainer.module#AddTrainerModule',
-    data: { showSidebar: false }
+    data: { showSidebar: false },
+    canActivate: [AuthGuard]
   },
   {
     path: 'trainer-profile',
     loadChildren: './trainers/trainer-profiles/trainer-profiles.module#TrainerProfilesModule',
-    data: { showSidebar: false }
+    data: { showSidebar: false },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    redirectTo: '/login',
+    canActivate: [AuthGuard]
   }
 ];
 

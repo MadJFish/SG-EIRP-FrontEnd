@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
         private alertService: AlertService
     ) {
         // redirect to dashboard if already logged in
-        if (this.authenticationService.currentAccessTokenValue) {
-            this.router.navigate(['/dashboard']);
+        if (this.authenticationService.isAuthenticated()) {
+            // this.router.navigate(['/dashboard']);
         }
     }
 
@@ -60,12 +60,12 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    alert("login successfully: " + JSON.stringify(data));
+                    console.log("login successfully: " + JSON.stringify(data));
                     // this.router.navigate([this.returnUrl]);
                     this.router.navigate(['/dashboard']);
                 },
                 error => {
-                    alert("login failed: " + error.toString());
+                    console.log("login failed: " + error.toString());
                     this.alertService.error(error);
                     this.loading = false;
                 });

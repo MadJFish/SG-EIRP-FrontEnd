@@ -33,10 +33,8 @@ export class AppComponent implements OnInit {
         });
     }
 
-    /*
     logout() {
-        this.authenticationService.logout();
-        this.router.navigate(['/login']);
+        console.log("test 123");
+        // this.authenticationService.logout();
     }
-    */
 }

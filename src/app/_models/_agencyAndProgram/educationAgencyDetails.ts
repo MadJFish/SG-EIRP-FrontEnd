@@ -1,8 +1,8 @@
-import { Address } from "./_common/addressDto";
-import { EducationAgencyBranch } from "./_agencyAndProgram/educationAgencyBranch";
-import { Program } from "./_agencyAndProgram/program";
-import { Bulletin } from "./_common/bulletin";
-import { Teacher } from "./_common/teacher";
+import { AddressDto } from "../_common/addressDto";
+import { EducationAgencyBranch } from "./educationAgencyBranch";
+import { Program } from "./program";
+import { Bulletin } from "../_common/bulletin";
+import { Teacher } from "../_common/teacher";
 import { EducationAgencyLeadership } from "./educationAgencyLeadership";
 
 export class EducationAgencyDetails {
@@ -18,7 +18,7 @@ export class EducationAgencyDetails {
     email: string;
     aboutUs: string;
     programes: Program[];
-    hqAddress: Address;
+    hqAddress: AddressDto;
     branches: EducationAgencyBranch[];
     whatsUpNews: Bulletin[];
     teachers: Teacher[];

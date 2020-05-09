@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'app/_services';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -29,9 +30,13 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
-      this.location = location;
-          this.sidebarVisible = false;
+    constructor(
+        location: Location,
+        private element: ElementRef,
+        private router: Router,
+        private authenticationServie: AuthenticationService) {
+        this.location = location;
+        this.sidebarVisible = false;
     }
 
     ngOnInit(){
@@ -143,6 +148,7 @@ export class NavbarComponent implements OnInit {
     }
 
     signOut(){
-        console.log("test 123");
+        this.authenticationServie.logout();
+        this.router.navigate(['/login']);
     }
 }

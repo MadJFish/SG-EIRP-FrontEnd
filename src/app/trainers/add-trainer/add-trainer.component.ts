@@ -3,9 +3,9 @@ import { FileUploader } from 'ng2-file-upload';
 
 import { CodeService } from '../../_services/code.service';
 import { GloblConstants } from '../../common/global-constants';
-import { Code } from 'app/_models/code';
-import { FileUploadForm } from 'app/_models/fileUploadForm';
-import { DocumentDto } from 'app/_models/document';
+import { Code } from 'app/_models/_common/code';
+import { FileUploadForm } from 'app/_models/_common/fileUploadForm';
+import { DocumentDto } from 'app/_models/_common/documentDto';
 import { fileUploadService } from 'app/_services/fileUpload.service';
 
 const UploadURL = 'http://localhost:8080/api/document/upload';

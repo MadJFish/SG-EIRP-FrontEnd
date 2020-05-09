@@ -1,4 +1,4 @@
-import { Address } from "./address";
+import { AddressDto } from "../_common/addressDto";
 
 export class SignUpRequest {
     userId: string;
@@ -13,7 +13,7 @@ export class SignUpRequest {
     studentName: string;
     relationShip: string;
     otherRelationShip: string;
-    address: Address
+    address: AddressDto;
     token: string;
 
     constructor() {
@@ -29,7 +29,7 @@ export class SignUpRequest {
         this.studentName = "";
         this.relationShip = "";
         this.otherRelationShip = "";
-        this.address = new Address();
+        this.address = new AddressDto();
         this.token = "";
     }
 }

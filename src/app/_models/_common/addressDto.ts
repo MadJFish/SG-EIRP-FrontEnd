@@ -1,10 +1,11 @@
-export class Address {
-    blockNo: string;
-    latitude: number;
-    longitude: number;
-    postalCode: string;
+export class AddressDto {
+    id: string;
     street: string;
     unitNo: string;
+    blockNo: string;
+    postalCode: string;
+    latitude: number;
+    longitude: number;
     
     constructor() {
         this.blockNo = "";
