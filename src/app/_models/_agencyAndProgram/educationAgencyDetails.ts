@@ -3,7 +3,7 @@ import { EducationAgencyBranch } from "./educationAgencyBranch";
 import { Program } from "./program";
 import { Bulletin } from "../_common/bulletin";
 import { Teacher } from "../_common/teacher";
-import { EducationAgencyLeadership } from "./educationAgencyLeadership";
+import { EducationAgencyLeadership } from "../index";
 
 export class EducationAgencyDetails {
     id: string;

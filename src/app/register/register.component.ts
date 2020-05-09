@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '../_services';
 import { GloblConstants } from 'app/common/global-constants';
-import { TutorEnrollRequestDto } from 'app/_models/_agencyAndProgram/tutorAgency';
+import { TutorEnrollRequestDto } from 'app/_models/index';
 
 @Component({
     selector: 'app-register',

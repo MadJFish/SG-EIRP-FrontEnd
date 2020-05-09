@@ -5,7 +5,7 @@ import { User } from 'app/_models';
 import { CommonUtils } from 'app/common/commonUtils';
 import { GloblConstants } from 'app/common/global-constants';
 import { map } from 'rxjs/internal/operators/map';
-import { TutorEnrollRequestDto } from 'app/_models/_agencyAndProgram/tutorAgency';
+import { TutorEnrollRequestDto } from 'app/_models/index';
 import { catchError } from 'rxjs/operators';
 
 import { ConfigService } from '../config/config.service';

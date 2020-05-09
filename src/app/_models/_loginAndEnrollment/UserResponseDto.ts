@@ -1,7 +1,7 @@
 import { AddressDto } from "../_common/addressDto";
 import { RoleDto } from "../_common/roleDto";
 
-export class TutorEnrollRequestDto {
+export class UserResponseDto {
     id: string;
     username: string;
     email: string;
