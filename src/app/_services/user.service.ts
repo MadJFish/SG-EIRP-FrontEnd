@@ -42,6 +42,22 @@ export class UserService {
         // return this.http.post(`http://ec2-13-250-119-52.ap-southeast-1.compute.amazonaws.com/api/registration/learner`, request);
     }
 
+    getUser() {
+        let api = CommonUtils.getUserAPI(GloblConstants.getCurrentUser);
+        console.log(api);
+
+        return this.http.get<any>(`${api}`)
+            .pipe(
+                map(response => {
+                    console.log("response: " + JSON.stringify(response));
+                    // store current user profile in local storage 
+                    // localStorage.setItem(GloblConstants.currentUserProfile, ) 
+                    
+                    return response.body;
+                })
+            );
+    }
+
     delete(id: number) {
         return this.http.delete(`${config.apiUrl}/users/${id}`);
     }

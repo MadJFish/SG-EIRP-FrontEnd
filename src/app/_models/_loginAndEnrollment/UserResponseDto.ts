@@ -13,4 +13,6 @@ export class UserResponseDto {
     gender: string;
     address: AddressDto;
     role: RoleDto;
+    tutorAgentId: string;
+    status: string;
 }

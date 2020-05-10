@@ -20,10 +20,6 @@ export class TrainerProfilesComponent implements OnInit {
     private tutorAgencyService: TutorAgencyService,
     private router: Router
   ) {
-    // redirect to login if not logged in
-    if (!this.authenticationService.currentAccessTokenValue) {
-      this.router.navigate(['/login']);
-    }
   }
 
   ngOnInit() {

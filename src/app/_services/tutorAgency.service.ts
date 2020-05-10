@@ -28,4 +28,15 @@ export class TutorAgencyService {
                 }));
     }
 
+    getAgencyByAgencyId(id: string): Observable<TutorAgencyDto> {
+        let api = CommonUtils.getTutorAPI(GloblConstants.tutorAgencyUrl);
+        console.log("api is: " + api);
+
+        return this.http.get<any>(`${api}`, { params: {"tutorAgencyId": id} })
+            .pipe(map(response => {
+                console.log(response);
+                return response.body;
+            }));
+    }
+
 }

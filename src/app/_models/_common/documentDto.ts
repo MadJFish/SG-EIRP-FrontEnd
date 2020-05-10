@@ -1,7 +1,9 @@
 export class DocumentDto {
-    documentId: String;
-    documentName: String;
-    documentType: String;
-    mime: String;
-    documentUrl: String;
+    documentId: string;
+    documentName: string;
+    documentType: string;
+    mime: string;
+    documentUrl: string;
+    uploadType: string;
+    referenceId: string;
 }

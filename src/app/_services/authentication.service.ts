@@ -80,9 +80,10 @@ export class AuthenticationService {
 
         return this.http.post<any>(`${api}`, this.getAuthenticationData(username, password).toString(), config)
             .pipe(map(accessToken => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                // store jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem(GloblConstants.currentAccessToken, JSON.stringify(accessToken));
                 this.currentAccessTokenSubject.next(<AccessToken> <unknown> accessToken);
+                
                 return accessToken;
             }));
     }
