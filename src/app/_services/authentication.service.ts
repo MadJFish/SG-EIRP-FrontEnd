@@ -86,6 +86,7 @@ export class AuthenticationService {
                 
                 return accessToken;
             }));
+
     }
 
     logout() {

@@ -24,12 +24,18 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let agent of agents">
-                      <td>{{agent.username}}</td>
-                      <td>{{agent.email}}</td>
-                      <td>{{agent.address}}</td>
-                      <td>{{agent.status}}</td>
-                      <td *ngIf="agent.status != 'APPROVED'"><button type="Approve" class="btn btn-primary" (click)="approve(agent.username)" 
-                        onClick="window.location.reload();">Approve</button></td>
+                      <ng-container *ngIf="agent.status != 'REJECTED'">
+                        <td>{{agent.username}}</td>
+                        <td>{{agent.email}}</td>
+                        <td>{{agent.address}}</td>
+                        <td>{{agent.status}}</td>
+                        <td *ngIf="agent.status != 'APPROVED'"><button type="Approve" class="btn btn-primary" (click)="approve(agent.username)" 
+                          >Approve</button></td>
+                        <td *ngIf="agent.status == 'APPROVED'"></td>
+                        <td *ngIf="agent.status != 'REJECTED'"><button type="Archive" class="btn btn-danger pull-right" (click)="reject(agent.username)" 
+                            >Reject</button></td>
+                        <td *ngIf="agent.status == 'REJECTED'"></td>
+                      </ng-container>
                     </tr>
                   </tbody>
                   </table>
