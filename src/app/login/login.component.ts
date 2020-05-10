@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
                 data => {
                     console.log("login successfully: " + JSON.stringify(data));
                     // this.router.navigate([this.returnUrl]);
-                    this.router.navigate(['/dashboard']);
+                    this.router.navigate(['/users-profile']);
                 },
                 error => {
                     console.log("login failed: " + error.toString());

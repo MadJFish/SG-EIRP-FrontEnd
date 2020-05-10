@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 
-import { CodeService } from '../../_services/code.service';
+import { CodeService } from 'app/_services';
 import { GloblConstants } from '../../common/global-constants';
-import { Code } from 'app/_models/_common/code';
-import { FileUploadForm } from 'app/_models/_common/fileUploadForm';
-import { DocumentDto } from 'app/_models/_common/documentDto';
-import { fileUploadService } from 'app/_services/fileUpload.service';
+import { Code } from 'app/_models';
+import { FileUploadForm } from 'app/_models';
+import { DocumentDto } from 'app/_models';
+import { fileUploadService } from 'app/_services';
 
 const UploadURL = 'http://localhost:8080/api/document/upload';
 
@@ -21,7 +21,7 @@ export class AddTrainerComponent implements OnInit {
   title = 'Upload an Image';
   theCode: Code;
   selectedFile: File;
-  imagePath: String = './assets/img/default/school.png';
+  imagePath: string = './assets/img/default/school.png';
   fileUploadForm: FileUploadForm;
   image: DocumentDto;
 
@@ -66,12 +66,13 @@ export class AddTrainerComponent implements OnInit {
       this.fileUploadForm.document = this.image;
 
       console.log(this.image);
-
+      /*
       this.fileUploadService.uploadAgencyImage(this.fileUploadForm).subscribe(
         (DocumentData: DocumentDto) => {
           this.imagePath = DocumentData.documentUrl;  
         }
       );
+      */
     };
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
