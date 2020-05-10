@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 
 import { GloblConstants } from 'app/common/global-constants';
 
-declare const $: any;
+import {MatPaginator} from '@angular/material/paginator';
 
-interface Marker {
-lat: number;
-lng: number;
-label?: string;
-draggable?: boolean;
+import {MatTableDataSource} from '@angular/material/table';
+
+export interface task {
+  id: number;
+  exeTime: string;
+  outcome: string;
 }
 
 @Component({
@@ -20,16 +21,19 @@ draggable?: boolean;
 
 export class SchoolsComponent implements OnInit {
 
-    tasks: object;
+    tasks: any;
     token: any;
     gov_data_task_url:string;
 
+    displayedColumns: string[] = ['id', 'exeTime', 'outcome'];
+
+    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private http: HttpClient) {
-    this.tasks = [];
+    //this.tasks = new Array<task>();
+    this.tasks = new MatTableDataSource<task>([]);
     this.token = JSON.parse(localStorage.getItem(GloblConstants.currentAccessToken))['access_token'];
     this.gov_data_task_url = GloblConstants.baseUrl + GloblConstants.schoolUrl + GloblConstants.SchDataTaskUrl;
-
   }
 
   ngOnInit(): void{
@@ -40,9 +44,19 @@ export class SchoolsComponent implements OnInit {
       'Authorization': 'Bearer ' + this.token
    });
 
-    this.http.get<Object>(this.gov_data_task_url, { headers: reqHeader }).subscribe(
+    this.http.get<task[]>(this.gov_data_task_url, { headers: reqHeader }).subscribe(
         data => {
-          this.tasks =data;
+          console.log(data);
+          //this.tasks = data;
+          console.log(data[1].id);
+          this.tasks = new MatTableDataSource<task>(data);
+
         });
+
+        this.tasks.paginator = this.paginator;
   }
+
+  ngAfterViewInit() {
+    this.tasks.paginator = this.paginator
+}
 }
