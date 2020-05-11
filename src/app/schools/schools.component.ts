@@ -24,20 +24,25 @@ export class SchoolsComponent implements OnInit {
     tasks: any;
     token: any;
     gov_data_task_url:string;
-
+    gov_data_fetch_url:string;
+    loading: boolean;
     displayedColumns: string[] = ['id', 'exeTime', 'outcome'];
 
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private http: HttpClient) {
     //this.tasks = new Array<task>();
+
     this.tasks = new MatTableDataSource<task>([]);
+    this.loading=false;
     this.token = JSON.parse(localStorage.getItem(GloblConstants.currentAccessToken))['access_token'];
     this.gov_data_task_url = GloblConstants.baseUrl + GloblConstants.schoolUrl + GloblConstants.SchDataTaskUrl;
+    this.gov_data_fetch_url = GloblConstants.baseUrl + GloblConstants.schoolUrl + GloblConstants.SchDataFetchUrl;
   }
 
   ngOnInit(): void{
     console.log(this.token);
+    this.loading = false;
 
     let reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
@@ -57,6 +62,27 @@ export class SchoolsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.tasks.paginator = this.paginator
-}
+      this.tasks.paginator = this.paginator
+  }
+
+  async refresh(){
+    this.loading = true;
+    let reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token
+   });
+
+   console.log("this.loading is starting");
+   await this.http.get<Object>(this.gov_data_fetch_url, { headers: reqHeader }).toPromise().then(
+      data => {
+        console.log(this.gov_data_fetch_url);
+        console.log(data);
+      },
+    );
+
+    this.loading = false;
+    console.log("this.loading is done done");
+    this.ngOnInit();
+  }
+
 }

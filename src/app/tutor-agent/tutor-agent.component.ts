@@ -25,7 +25,7 @@ export class TutorAgentComponent implements OnInit {
   agent_list_url:string;
   agent_approval_url: string;
   static APPROVED_STATUS = "APPROVED";
-  static REJECTED_STATUS = "REJECTED";
+  static ARCHIVED_STATUS = "ARCHIVED";
 
   constructor(private http: HttpClient) { 
     this.agents = [];
@@ -53,9 +53,9 @@ export class TutorAgentComponent implements OnInit {
     this.ngOnInit();
   }
 
-  reject(value:string) {
+  archive(value:string) {
 
-    let bodyString = JSON.stringify({ username: value, status: TutorAgentComponent.REJECTED_STATUS });
+    let bodyString = JSON.stringify({ username: value, status: TutorAgentComponent.ARCHIVED_STATUS });
 
     let reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
