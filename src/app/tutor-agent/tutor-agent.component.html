@@ -21,10 +21,12 @@
                     <th>Email</th>
                     <th>Address</th>
                     <th>Status</th>
+                    <th></th>
+                    <th></th>
                     </thead>
                     <tbody>
                     <tr *ngFor="let agent of agents">
-                      <ng-container *ngIf="agent.status != 'REJECTED'">
+                      <ng-container *ngIf="agent.status != 'ARCHIVED'">
                         <td>{{agent.username}}</td>
                         <td>{{agent.email}}</td>
                         <td>{{agent.address}}</td>
@@ -32,9 +34,9 @@
                         <td *ngIf="agent.status != 'APPROVED'"><button type="Approve" class="btn btn-primary" (click)="approve(agent.username)" 
                           >Approve</button></td>
                         <td *ngIf="agent.status == 'APPROVED'"></td>
-                        <td *ngIf="agent.status != 'REJECTED'"><button type="Archive" class="btn btn-danger pull-right" (click)="reject(agent.username)" 
-                            >Reject</button></td>
-                        <td *ngIf="agent.status == 'REJECTED'"></td>
+                        <td *ngIf="agent.status != 'ARCHIVED'"><button type="Archive" class="btn btn-danger pull-right" (click)="archive(agent.username)" 
+                            >Archive</button></td>
+                        <td *ngIf="agent.status == 'ARCHIVED'"></td>
                       </ng-container>
                     </tr>
                   </tbody>

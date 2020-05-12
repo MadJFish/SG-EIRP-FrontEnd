@@ -30,7 +30,7 @@ export class GloblConstants {
     public static TutorAgentListUrl: string = "/api/users/tutor/list";
     public static TutorAgentApprovalUrl: string = "/api/users/tutor/status";
     public static SchDataTaskUrl: string = "/api/govDataTask/all"; 
-
+    public static SchDataFetchUrl: string = "/api/govDataTask/fetch"; 
     public static tutorAgencyUrl: string = "/api/tutorAgency/get";
 
     // Common Constants
