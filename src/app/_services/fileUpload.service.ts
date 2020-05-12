@@ -18,6 +18,22 @@ export class fileUploadService {
         return null;
     }
 
+    pushFileToTempStorage(file: File): Observable<any> {
+        // get api
+        const api: string = CommonUtils.getTutorAPI(GloblConstants.tempDocumentUploadUrl);
+        console.log(api);
+
+        // construct form data
+        const data: FormData = new FormData();
+        data.append('file', file);
+
+        return this.http.post<any>(`${api}`, data)
+            .pipe(map(response => {
+                console.log(response);
+                return response.body;
+            }));
+    }
+
     pushFileToStorage(file: File, documentDto: DocumentDto): Observable<any> {
         // get api
         const api: string = CommonUtils.getTutorAPI(GloblConstants.documentUploadURL);

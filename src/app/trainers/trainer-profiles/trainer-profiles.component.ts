@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService, CodeService } from 'app/_services';
 import { TutorAgencyService } from 'app/_services';
 import { fileUploadService } from 'app/_services';
-import { TutorAgencyDto, DocumentDto, Code } from 'app/_models';
+import { TutorAgencyDto, DocumentDto, Code, TutorAgencyDetailDto, EducationAgencyLeadershipDto } from 'app/_models';
 import { GloblConstants } from 'app/common/global-constants';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { CommonUtils } from 'app/common/commonUtils';
+import { Observable } from 'rxjs';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
     selector: 'app-trainer-profiles',
@@ -16,25 +18,48 @@ import { CommonUtils } from 'app/common/commonUtils';
 })
 export class TrainerProfilesComponent implements OnInit {
     // data binding
-    tutorAgency: TutorAgencyDto = new TutorAgencyDto();
+    private tutorAgency: TutorAgencyDto = new TutorAgencyDto();
+    private tutorAgencyDetail: TutorAgencyDetailDto = new TutorAgencyDetailDto();
     private profileImage: string;
+    private managementImage: string;
     private profileImageDto: DocumentDto;
+    private managementImageDto: DocumentDto;
     private educationLevels: Code[];
     private subjects: Code[];
     private locations: Code[];
 
+    private photos: DocumentDto[];
+    private videos: DocumentDto[];
+    private playingVideos: DocumentDto[];
+    private references: DocumentDto[];
+
+    private previewVideoUrl: string;
+    private previewVideoType: string;
+    private showPreviewVieo: boolean;
+
     private editModeEnabled: boolean = false;
+    private editManagementEnabled: boolean = false;
     private loading = false;
 
+    private leadershipTeams: EducationAgencyLeadershipDto[];
+    private tempLeader: EducationAgencyLeadershipDto;
+
     // form
-    agencyForm: FormGroup;
+    private agencyForm: FormGroup;
+    private leaderForm: FormGroup;
 
     // native file upload
-    selectedFiles: FileList;
+    private profileImageFiles: FileList;
+    private managementImageFiles: FileList;
+    private photoFiles: FileList;
+    private videoFiles: FileList;
+    private referenceFiles: FileList;
     currentFileUpload: File;
     progress: { percentage: number } = { percentage: 0 };
     selectedFile = null;
     changeImage = false;
+
+    @ViewChild('videoPlayer') videoPlayer: ElementRef;
 
     constructor(
         private codeService: CodeService,
@@ -46,6 +71,8 @@ export class TrainerProfilesComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.showPreviewVieo = false;
+
         // initialize form group
         this.agencyForm = this.formBuilder.group({
             promoText: new FormControl(),
@@ -55,6 +82,12 @@ export class TrainerProfilesComponent implements OnInit {
             subjects: new FormArray([]),
             educationLevels: new FormArray([]),
             locations: new FormArray([]),
+        });
+
+        this.leaderForm = this.formBuilder.group({
+            name: new FormControl(),
+            designation: new FormControl(),
+            description: new FormControl()
         });
 
         // get uesr id
@@ -75,7 +108,27 @@ export class TrainerProfilesComponent implements OnInit {
                             [0];
                     this.profileImageDto = documentDto;
                     this.profileImage = this.profileImageDto.documentUrl;
-                    console.log(JSON.stringify(this.profileImage));
+                }
+
+                // set photos
+                if (tutorAgencyDto.tutorAgencyDocuments != null) {
+                    this.photos =
+                        tutorAgencyDto.tutorAgencyDocuments
+                            .filter(document => document.documentType === GloblConstants.photo);
+                }
+
+                // set videos
+                if (tutorAgencyDto.tutorAgencyDocuments != null) {
+                    this.videos =
+                        tutorAgencyDto.tutorAgencyDocuments
+                            .filter(document => document.documentType === GloblConstants.video);
+                }
+
+                // set attachments
+                if (tutorAgencyDto.tutorAgencyDocuments != null) {
+                    this.references =
+                        tutorAgencyDto.tutorAgencyDocuments
+                            .filter(document => document.documentType === GloblConstants.attachment);
                 }
 
                 console.log("test 1: " + JSON.stringify(this.tutorAgency));
@@ -131,6 +184,19 @@ export class TrainerProfilesComponent implements OnInit {
                     });
                 }
             );
+
+        // agency details
+        this.tutorAgencyService.getAgencyDetailByAgencyId(agencyId)
+            .subscribe((tutorAgencyDetailDto: TutorAgencyDetailDto) => {
+                this.tutorAgencyDetail = tutorAgencyDetailDto;
+                console.log("Tutor Agency Detail: " + JSON.stringify(this.tutorAgencyDetail));
+
+                // leadership team
+                this.leadershipTeams = this.tutorAgencyDetail.leadershipTeam;
+                if (this.leadershipTeams == null) {
+                    this.leadershipTeams = [];
+                }
+            });
 
     }
 
@@ -239,21 +305,12 @@ export class TrainerProfilesComponent implements OnInit {
         this.selectedFile = event.target.files[0];
     }
 
-    upload(documentDto: DocumentDto) {
-        this.progress.percentage = 0;
-        this.currentFileUpload = this.selectedFiles.item(0);
-
+    upload(documentDto: DocumentDto, file: File) {
         console.log(JSON.stringify(documentDto));
-
-        this.fileUploadService.pushFileToStorage(this.currentFileUpload, documentDto)
-            .subscribe(document => {
-                console.log(document);
-                this.profileImage = document;
-            });
     }
 
     uploadProfileImage(event) {
-        this.selectedFiles = event.target.files;
+        this.profileImageFiles = event.target.files;
 
         // set dto
         if (this.profileImageDto == null) {
@@ -263,6 +320,237 @@ export class TrainerProfilesComponent implements OnInit {
             this.profileImageDto.referenceId = this.tutorAgency.id;
         }
 
-        this.upload(this.profileImageDto);
+        this.progress.percentage = 0;
+        this.currentFileUpload = this.profileImageFiles.item(0);
+
+        this.fileUploadService.pushFileToStorage(this.currentFileUpload, this.profileImageDto)
+            .subscribe(document => {
+                console.log(document);
+                this.profileImage = document;
+            });
+    }
+
+    uploadManagementImage(event) {
+        this.managementImageFiles = event.target.files;
+
+        // set dto
+        if (this.managementImageDto == null) {
+            /*
+            this.managementImageDto = new DocumentDto();
+            this.managementImageDto.documentType = GloblConstants.profileImage;
+            this.managementImageDto.uploadType = GloblConstants.agencyUploadType;
+            this.managementImageDto.referenceId = this.tutorAgency.id;
+            */
+            // for new leadership team member, upload to temp folder
+            this.fileUploadService.pushFileToTempStorage(this.managementImageFiles.item(0))
+                .subscribe(response => {
+                    console.log(response);
+                    // this.managementImage = document;
+                    this.managementImage = response;
+                });
+            
+        } else {
+
+            /*
+            this.progress.percentage = 0;
+
+            this.fileUploadService.pushFileToStorage(this.managementImageFiles.item(0), this.managementImageDto)
+                .subscribe(document => {
+                    console.log(document);
+                    this.managementImage = document;
+                });
+            */
+        }
+    }
+
+    addPhoto(event) {
+        this.photoFiles = event.target.files;
+
+        console.log(this.photoFiles);
+
+        // set dto
+        if (this.photos == null) {
+            this.photos = [];
+        }
+
+        console.log(this.photoFiles.length);
+
+        if (this.photoFiles.length > 0) {
+            console.log("photo length: " + this.photoFiles.length); 
+            var file = this.photoFiles.item(0);
+            console.log(file);
+            var photoDocument: DocumentDto = new DocumentDto();
+            photoDocument.documentName = file.name;
+            photoDocument.documentType = GloblConstants.photo;
+            photoDocument.mime = file.type;
+            photoDocument.uploadType = GloblConstants.agencyUploadType;
+            photoDocument.referenceId = this.tutorAgency.id;
+
+            this.fileUploadService.pushFileToStorage(file, photoDocument)
+            .subscribe(document => {
+                console.log(document);
+                this.photos.push(document);
+            });
+        }
+    }
+
+    addVideo(event) {
+        this.videoFiles = event.target.files;
+
+        console.log(this.videoFiles);
+
+        // set dto
+        if (this.videos == null) {
+            this.videos = [];
+        }
+
+        console.log(this.videoFiles.length);
+
+        if (this.videoFiles.length > 0) {
+            console.log("video files length: " + this.videoFiles.length); 
+            var file = this.videoFiles.item(0);
+            console.log(file);
+            var videoDocument: DocumentDto = new DocumentDto();
+            videoDocument.documentName = file.name;
+            videoDocument.documentType = GloblConstants.video;
+            videoDocument.mime = file.type;
+            videoDocument.uploadType = GloblConstants.agencyUploadType;
+            videoDocument.referenceId = this.tutorAgency.id;
+
+            this.fileUploadService.pushFileToStorage(file, videoDocument)
+            .subscribe(document => {
+                console.log(document);
+                this.videos.push(document);
+            });
+        }
+    }
+
+    previewVideo(i) {
+        console.log(i);
+        this.playingVideos = [];
+        this.playingVideos.push(this.videos[i]);
+    }
+
+    toggleVideo(event: any) {
+        this.videoPlayer.nativeElement.play();
+    }
+
+    addReference(event) {
+        this.referenceFiles = event.target.files;
+
+        console.log(this.referenceFiles);
+
+        // set dto
+        if (this.references == null) {
+            this.references = [];
+        }
+
+        console.log(this.referenceFiles.length);
+
+        if (this.referenceFiles.length > 0) {
+            console.log("photo length: " + this.referenceFiles.length); 
+            var file = this.referenceFiles.item(0);
+            console.log(file);
+            var referenceDocument: DocumentDto = new DocumentDto();
+            referenceDocument.documentName = file.name;
+            referenceDocument.documentType = GloblConstants.attachment;
+            referenceDocument.mime = file.type;
+            referenceDocument.uploadType = GloblConstants.agencyUploadType;
+            referenceDocument.referenceId = this.tutorAgency.id;
+
+            this.fileUploadService.pushFileToStorage(file, referenceDocument)
+            .subscribe(document => {
+                console.log(document);
+                this.references.push(document);
+            });
+        }
+    }
+
+    addManagement() {
+        this.loading = true;
+        if (!this.editManagementEnabled) {
+            this.editManagementEnabled = true;
+        }
+        this.loading = false;
+    }
+
+    saveManagement() {
+        this.loading = true;
+        
+        var updatedLeader = new EducationAgencyLeadershipDto();
+        if (this.tempLeader == null) {
+            this.tempLeader = new EducationAgencyLeadershipDto();
+        }
+        updatedLeader.copy(this.tempLeader);
+
+        updatedLeader.setContent(this.leaderForm.value, this.tutorAgency.id, this.managementImage);
+        var leadershipArray: EducationAgencyLeadershipDto[] = [];
+        leadershipArray.push(updatedLeader);
+
+        console.log(this.tempLeader);
+        console.log(updatedLeader);
+
+        this.tutorAgencyService.saveAgencyLeadership(leadershipArray)
+            .subscribe(agencyLeaderships => {
+                console.log(agencyLeaderships);
+                this.saveManagementProfileImage(agencyLeaderships);
+                if (this.editManagementEnabled) {
+                    this.editManagementEnabled = false;
+                }
+                this.loading = false;
+            });
+    }
+
+    saveManagementProfileImage(agencyLeaderships: EducationAgencyLeadershipDto[]) {
+        if (agencyLeaderships == null || agencyLeaderships.length == 0) {
+            console.log("test");
+            return;
+        }
+
+        console.log("#### save agency leadership document");
+
+        var file: File = this.managementImageFiles.item(0);
+        if (this.managementImageDto == null) {
+            this.managementImageDto = new DocumentDto();
+        }
+
+        this.managementImageDto.documentName = file.name;
+        this.managementImageDto.documentType = GloblConstants.profileImage;
+        this.managementImageDto.mime = file.type;
+        this.managementImageDto.uploadType = GloblConstants.leadershipUploadType;
+        this.managementImageDto.referenceId = agencyLeaderships[0].id;
+        this.fileUploadService.pushFileToStorage(file, this.managementImageDto)
+            .subscribe(document => {
+                console.log(document);
+                this.managementImageDto = document;
+            });
+    }
+
+    updateManagement(i) {
+        this.loading = true;
+        console.log(i);
+        var leader: EducationAgencyLeadershipDto = this.leadershipTeams[i];
+        console.log(leader);
+        this.tempLeader = leader;
+        console.log(this.tempLeader);
+
+        // update data
+        this.leaderForm.controls.name.setValue(this.tempLeader.name);
+        this.leaderForm.controls.designation.setValue(this.tempLeader.designation);
+        this.leaderForm.controls.description.setValue(this.tempLeader.description);
+        this.managementImage = this.tempLeader.imageUrl;
+
+        if (!this.editManagementEnabled) {
+            this.editManagementEnabled = true;
+        }
+        this.loading = false;
+    }
+
+    cancelManagement() {
+        this.loading = true;
+        if (this.editManagementEnabled) {
+            this.editManagementEnabled = false;
+        }
+        this.loading = false;
     }
 }

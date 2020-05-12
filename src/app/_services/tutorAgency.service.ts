@@ -5,6 +5,7 @@ import { TutorAgencyDto } from "app/_models/_agencyAndProgram/tutorAgency";
 import { CommonUtils } from "app/common/commonUtils";
 import { GloblConstants } from "app/common/global-constants";
 import { map } from "rxjs/operators";
+import { TutorAgencyDetailDto, EducationAgencyLeadershipDto } from "app/_models";
 
 @Injectable({ providedIn: 'root' })
 export class TutorAgencyService {
@@ -39,6 +40,17 @@ export class TutorAgencyService {
             }));
     }
 
+    getAgencyDetailByAgencyId(id: string): Observable<TutorAgencyDetailDto> {
+        let api = CommonUtils.getTutorAPI(GloblConstants.tutorAgencyDetailUrl);
+        console.log("api is: " + api);
+
+        return this.http.get<TutorAgencyDetailDto>(`${api}`, { params: {"tutorAgencyId": id} })
+            .pipe(map((response:any) => {
+                console.log(response);
+                return response.body;
+            }));
+    }
+
     saveAgency(tutorAgency: TutorAgencyDto): Observable<TutorAgencyDto> {
         let api = CommonUtils.getTutorAPI(GloblConstants.saveTutorAgencyUrl);
         console.log("api is: " + api);
@@ -48,5 +60,16 @@ export class TutorAgencyService {
                 console.log("response: " +JSON.stringify(response));
                 return response.body;
             }));
-    }    
+    }
+
+    saveAgencyLeadership(agencyLeadershipArray: EducationAgencyLeadershipDto[]): Observable<EducationAgencyLeadershipDto[]> {
+        let api = CommonUtils.getTutorAPI(GloblConstants.saveTutorAgencyLeadership);
+        console.log("api is: " + api);
+
+        return this.http.post<EducationAgencyLeadershipDto[]>(`${api}`, agencyLeadershipArray)
+            .pipe(map((response:any) => {
+                console.log("response: " + JSON.stringify(response));
+                return response.body;
+            }));
+    }
 }

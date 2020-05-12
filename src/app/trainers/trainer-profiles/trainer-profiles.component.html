@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="card content">
-      <form [formGroup]="agencyForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="agencyForm">
         <div class="card-header card-header-danger">
           <h3 class="card-title">Tutor Agency: {{tutorAgency.name}}</h3>
           <a *ngIf="!editModeEnabled" role="button" (click)="editMode()">
@@ -93,6 +93,213 @@
                 class="checkbox-item">
                   {{locations[i].description}}
               </mat-checkbox>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title">Activities:</span>
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a mat-button class="nav-link active" href="#photos" data-toggle="tab">
+                                    <i class="material-icons">bug_report</i> Photos
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a mat-button class="nav-link" href="#videos" data-toggle="tab">
+                                    <i class="material-icons">code</i> Videos
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a mat-button class="nav-link" href="#references" data-toggle="tab">
+                                    <i class="material-icons">cloud</i> Attachments
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                              <a mat-button class="nav-link" href="#management" data-toggle="tab">
+                                  <i class="material-icons">cloud</i> Management
+                                  <div class="ripple-container"></div>
+                              </a>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="photos">
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let photo of photos; let i=index">
+                                    <td style="width: 5%;">{{i+1}}</td>
+                                    <td style="width: 10%;">{{photo.documentName}}</td>
+                                    <td style="width: 10%;">{{photo.documentType}}</td>
+                                    <td style="width: 10%;">{{photo.mime}}</td>
+                                    <td style="width: 10%;">{{photo.uploadType}}</td>
+                                    <td style="width: 50%;"><img class="img" style="width:40px; height:40px;" [src]="photo.documentUrl" /></td>
+                                    <td class="td-actions text-right">
+                                        <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="td-actions text-right">
+                                        <button mat-stroked-button color="primary" (click)="photoUpload.click()">Upload</button>
+                                        <input type="file" style="display: none" id="customPhoto" (change)="addPhoto($event)" #photoUpload>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="videos">
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let video of videos; let i=index">
+                                    <td style="width: 5%;">{{i+1}}</td>
+                                    <td style="width: 10%;">{{video.documentName}}</td>
+                                    <td style="width: 10%;">{{video.documentType}}</td>
+                                    <td style="width: 10%;">{{video.mime}}</td>
+                                    <td style="width: 10%;">{{video.uploadType}}</td>
+                                    <td style="width: 50%;">
+                                      <button mat-stroked-button color="primary" (click)="previewVideo(i)">Preview</button>
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="td-actions text-right">
+                                        <button mat-stroked-button color="primary" (click)="videoUpload.click()">Upload</button>
+                                        <input type="file" style="display: none" id="customPhoto" (change)="addVideo($event)" #videoUpload>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="video">
+                            <video *ngFor="let video of playingVideos" controls (click)="toggleVideo()" #videoPlayer>
+                                <source src="{{video.documentUrl}}" type="{{video.mime}}" />
+                                Browser not supported
+                            </video>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="references">
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let reference of references; let i=index">
+                                    <td style="width: 5%;">{{i+1}}</td>
+                                    <td style="width: 10%;">{{reference.documentName}}</td>
+                                    <td style="width: 10%;">{{reference.documentType}}</td>
+                                    <td style="width: 10%;">{{reference.mime}}</td>
+                                    <td style="width: 10%;">{{reference.uploadType}}</td>
+                                    <td style="width: 50%;">
+                                        <a type="Button" href="{{reference.documentUrl}}">
+                                          Download
+                                        </a>
+                                        
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="td-actions text-right">
+                                        <button mat-stroked-button color="primary" (click)="referenceUpload.click()">Upload</button>
+                                        <input type="file" style="display: none" id="customReference" (change)="addReference($event)" #referenceUpload>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="management">
+                      <form [formGroup]="leaderForm">
+                          <table class="table">
+                              <tbody>
+                                  <tr *ngFor="let leader of leadershipTeams; let i=index">
+                                      <td style="width: 5%;">{{i+1}}</td>
+                                      <td style="width: 40%;"><img class="img" style="width:100px; height:100px;" [src]="leader.imageUrl" /></td>
+                                      <td style="width: 10%;">{{leader.name}}</td>
+                                      <td style="width: 10%;">{{leader.designation}}</td>
+                                      <td style="width: 30%;">{{leader.description}}</td>
+                                      <td class="td-actions text-right">
+                                          <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" (click)="updateManagement(i)" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                              <i class="material-icons">edit</i>
+                                          </button>
+                                          <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                              <i class="material-icons">close</i>
+                                          </button>
+                                      </td>
+                                  </tr>
+                                  <tr *ngIf="editManagementEnabled">
+                                      <td style="width: 5%;"></td>
+                                      <td style="width: 40%;">
+                                          <div style="width: 100px; height: 100px;" (click)="mangementImageInput.click()">
+                                              <a>
+                                                  <img style="width: 100px; height: 100px;" [src]="managementImage" />
+                                                  <input style="display: none" type="file" id="customManagementImage" (change)="uploadManagementImage($event)" #mangementImageInput>
+                                              </a>
+                                          </div>
+                                      </td>
+                                      <td style="width: 10%;">
+                                          <mat-form-field>
+                                              <input matInput formControlName="name" placeholder="Name" />
+                                          </mat-form-field>
+                                      </td>
+                                      <td style="width: 10%;">
+                                          <mat-form-field>
+                                              <input matInput formControlName="designation" placeholder="Designation" />
+                                          </mat-form-field>
+                                      </td>
+                                      <td style="width: 30%;">
+                                          <mat-form-field>
+                                              <input matInput formControlName="description" placeholder="Description" />
+                                          </mat-form-field>
+                                      </td>
+                                      <td class="td-actions text-right">
+                                          <button mat-raised-button type="button" matTooltip="Cancel" [matTooltipPosition]="'above'" (click)="cancelManagement()" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                              <i class="material-icons">close</i>
+                                          </button>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td class="td-actions text-right">
+                                          <button mat-stroked-button *ngIf="!editManagementEnabled" color="primary" (click)="addManagement()">Add Management</button>
+                                          <button mat-stroked-button *ngIf="editManagementEnabled" color="primary" (click)="saveManagement()">Save Management</button>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </form>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
