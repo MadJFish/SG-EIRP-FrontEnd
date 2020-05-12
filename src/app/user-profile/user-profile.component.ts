@@ -19,6 +19,9 @@ export class UserProfileComponent implements OnInit {
   private tutorAgency: TutorAgencyDto = new TutorAgencyDto();
   private imagePath: string = "./assets/img/faces/marc.jpg";
 
+  private editModeEnabled: boolean = false;
+  private loading = false;
+
   // native file upload
   selectedFiles: FileList;
   currentFileUpload: File;
@@ -69,6 +72,23 @@ export class UserProfileComponent implements OnInit {
               this.tutorAgency = tutorAgencyDto;
               console.log("test 1: " + JSON.stringify(this.tutorAgency));
           });
+  }
+
+  // edit save profile
+  editProfile() {
+      this.loading = true;
+      if (!this.editModeEnabled) {
+          this.editModeEnabled = true;
+      }
+      this.loading = false;
+  }
+
+  saveProfile() {
+      this.loading = true;
+      if (this.editModeEnabled) {
+          this.editModeEnabled = false;
+      }
+      this.loading = false;
   }
 
   // native file upload

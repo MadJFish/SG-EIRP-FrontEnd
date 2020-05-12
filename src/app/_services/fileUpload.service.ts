@@ -31,7 +31,7 @@ export class fileUploadService {
         return this.http.post<any>(`${api}`, data)
             .pipe(map(response => {
                 console.log(response);
-                return response;
+                return response.body;
             }));
     }
 }

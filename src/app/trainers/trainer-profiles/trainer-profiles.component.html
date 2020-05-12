@@ -1,80 +1,102 @@
 <div class="main-content">
   <div class="container-fluid">
-    <!--
-    <a href="/add-trainer" class="btn btn-danger btn-round">Add Trainer</a>  
-    -->
-    <div class="col-md-12">
-      <div class="group">
-        <div class="group-title">
-          <span>Featured Tutor Agencies</span>
+    <div class="card content">
+      <form [formGroup]="agencyForm" (ngSubmit)="onSubmit()">
+        <div class="card-header card-header-danger">
+          <h3 class="card-title">Tutor Agency: {{tutorAgency.name}}</h3>
+          <a *ngIf="!editModeEnabled" role="button" (click)="editMode()">
+            <i class="material-icons text-color-silver">edit</i>
+          </a>
+          <a *ngIf="editModeEnabled" role="button" (click)="save()">
+            <i class="material-icons text-color-silver">save</i>
+          </a>
+          <a *ngIf="editModeEnabled" role="button" (click)="cancel()">
+            <i class="material-icons text-color-silver">cancel</i>
+          </a>
         </div>
-        <div class="row">
-          <div class="card card-item" *ngFor="let agency of featuredAgencies">
-            <div class="card-item-image">
-              <a href="javascript:void(0)">
-                <img class="img" src="./assets/img/orion-tuition-centre-siteicon.png" />
-              </a>
+        <div class="card-body">
+          <div class="row">
+            <div class="card card-item">
+              <div class="card-item-image" (click)="fileInput.click()">
+                <a>
+                  <img class="img" [src]="profileImage" />
+                  <input style="display: none" type="file" id="customFile" (change)="uploadProfileImage($event)" #fileInput>
+                </a>
+              </div>
             </div>
-            <div class="card-item-title">
-              <span>{{agency.name}}</span>
+            <div class="col-md-8">
+              <div>
+                <h4 class="card-title">Introduction</h4>
+              </div>
+              <div *ngIf="!editModeEnabled">
+                <span>{{tutorAgency.promoText}}</span>
+              </div>
+              <div *ngIf="editModeEnabled">
+                <mat-form-field>
+                  <mat-label>Add Some Introduction</mat-label>
+                  <textarea formControlName="promoText" matInput placeholder="introduction...." value="{{tutorAgency.promoText}}"></textarea>
+                </mat-form-field>
+              </div>
+              <br>
+              <br>
+              <div>
+                <h4 class="card-title">About Us</h4>
+              </div>
+              <div *ngIf="!editModeEnabled">
+                <span>{{tutorAgency.aboutUs}}</span>
+              </div>
+              <div *ngIf="editModeEnabled">
+                <mat-form-field>
+                  <mat-label>Added Some About Us</mat-label>
+                  <textarea formControlName="aboutUs" matInput placeholder="about us...." value="{{tutorAgency.aboutUs}}"></textarea>
+                </mat-form-field>
+              </div>
             </div>
-            <div class="card-item-text">
-              <span>{{agency.targetEduLevels}}</span>
+          </div>
+          <div class="col-md-6">
+            <div class="col-md-6">Featured: <span>{{tutorAgency.featured}}</span></div>
+            <div *ngIf="!editModeEnabled" class="col-md-12">Phone: <span>{{tutorAgency.phone}}</span></div>
+            <div class="col-md-6">
+              <mat-form-field *ngIf="editModeEnabled">
+                <input matInput formControlName="phone" placeholder="Phone" value="{{tutorAgency.phone}}" />
+              </mat-form-field>
             </div>
-            <div class="card-item-text">
-              <span>{{agency.subjects}}</span>
+            <div *ngIf="!editModeEnabled" class="col-md-12">Email: <span>{{tutorAgency.email}}</span></div>
+            <div class="col-md-6">
+              <mat-form-field *ngIf="editModeEnabled">
+                <input matInput formControlName="email" placeholder="Email" value="{{tutorAgency.email}}" />
+              </mat-form-field>
             </div>
-            <div class="card-item-text">
-              <span>{{agency.phone}}</span>
+            <div class="col-md-12"><span>Subjects: </span><span *ngIf="!editModeEnabled">{{tutorAgency.subjects}}</span></div>
+            <div formArrayName="subjects" *ngIf="editModeEnabled" class="col-md-6">
+              <mat-checkbox
+                *ngFor="let subject of agencyForm.controls.subjects.controls; let i=index"
+                [formControlName]="i"
+                class="checkbox-item">
+                  {{subjects[i].description}}
+              </mat-checkbox>
             </div>
-            <div class="card-item-text">
-              <span>{{agency.email}}</span>
+            <div class="col-md-12">Education Levels: <span *ngIf="!editModeEnabled">{{tutorAgency.targetEduLevels}}</span></div>
+            <div formArrayName="educationLevels" *ngIf="editModeEnabled" class="col-md-6">
+              <mat-checkbox
+                *ngFor="let educationLevel of agencyForm.controls.educationLevels.controls; let i=index"
+                [formControlName]="i"
+                class="checkbox-item">
+                  {{educationLevels[i].description}}
+              </mat-checkbox>
             </div>
-            <div class="card-item-text">
-              <span>{{agency.locations}}</span>
-            </div>
-            <div class="card-item-description">
-              <span>{{agency.promoText}}</span>
+            <div class="col-md-12">Locations: <span *ngIf="!editModeEnabled">{{tutorAgency.locations}}</span></div>
+            <div formArrayName="locations" *ngIf="editModeEnabled" class="col-md-6">
+              <mat-checkbox
+                *ngFor="let location of agencyForm.controls.locations.controls; let i=index"
+                [formControlName]="i"
+                class="checkbox-item">
+                  {{locations[i].description}}
+              </mat-checkbox>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="group">
-      <div class="group-title">
-        <span>Tutor Agency List</span>
-      </div>
-      <div class="row">
-        <div class="card card-item" *ngFor="let agency of tutorAgencies">
-          <div class="card-item-image">
-            <a href="javascript:void(0)">
-              <img class="img" src="./assets/img/orion-tuition-centre-siteicon.png" />
-            </a>
-          </div>
-          <div class="card-item-title">
-            <span>{{agency.name}}</span>
-          </div>
-          <div class="card-item-text">
-            <span>{{agency.targetEduLevels}}</span>
-          </div>
-          <div class="card-item-text">
-            <span>{{agency.subjects}}</span>
-          </div>
-          <div class="card-item-text">
-            <span>{{agency.phone}}</span>
-          </div>
-          <div class="card-item-text">
-            <span>{{agency.email}}</span>
-          </div>
-          <div class="card-item-text">
-            <span>{{agency.locations}}</span>
-          </div>
-          <div class="card-item-description">
-            <span>{{agency.promoText}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      </form>
+    </div>  
   </div>
 </div>

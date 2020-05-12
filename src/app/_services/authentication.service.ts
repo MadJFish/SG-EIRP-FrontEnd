@@ -19,9 +19,6 @@ export class AuthenticationService {
     private authentication_username = 'clientId';
     private authentication_password = 'secret';
 
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
-
     private currentAccessTokenSubject: BehaviorSubject<AccessToken>;
     public currentAccessToken: Observable<AccessToken>;
 
@@ -30,10 +27,6 @@ export class AuthenticationService {
         public jwtHelper: JwtHelperService) {
         this.currentAccessTokenSubject = new BehaviorSubject<AccessToken>(JSON.parse(localStorage.getItem(GloblConstants.currentAccessToken)));
         this.currentAccessToken = this.currentAccessTokenSubject.asObservable();
-    }
-
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
     }
 
     public get currentAccessTokenValue(): AccessToken {

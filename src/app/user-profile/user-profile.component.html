@@ -24,7 +24,14 @@
               <!--
                 <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
               -->
-              <a href="javascript:void(0)" class="btn btn-danger btn-round">Edit Profile</a>
+              <button *ngIf="!editModeEnabled" [disabled]="loading" (click)="editProfile()" class="btn btn-danger btn-round">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Edit Profile
+              </button>
+              <button *ngIf="editModeEnabled" (click)="saveProfile()" class="btn btn-danger btn-round">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Save Profile
+              </button>
             </div>
           </div>
         </div>
@@ -42,20 +49,32 @@
                     </span>
                   </div>
                   <div class="col-md-5">
-                    <span class="text-success">
-                      Email: {{user.email}}
+                    <span *ngIf="!editModeEnabled" class="text-success">Email: </span>
+                    <mat-form-field *ngIf="editModeEnabled" class="user-profile-full-width" value="{{user.email}}">
+                      <input matInput placeholder="Email" />
+                    </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.email}}
                     </span>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-5">
-                    <span class="text-success">
-                      First Name: {{user.firstName}}
+                    <span *ngIf="!editModeEnabled" class="text-success">First Name: </span>
+                    <mat-form-field *ngIf="editModeEnabled" class="user-profile-full-width" value="{{user.firstName}}">
+                      <input matInput placeholder="First Name" />
+                    </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.firstName}}
                     </span>
                   </div>
                   <div class="col-md-5">
-                    <span class="text-success">
-                      Last Name: {{user.lastName}}
+                    <span *ngIf="!editModeEnabled" class="text-success">Last Name: </span>
+                    <mat-form-field *ngIf="editModeEnabled" class="user-profile-full-width" value="{{user.lastName}}">
+                      <input matInput placeholder="Last Name" />
+                    </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.lastName}}
                     </span>
                   </div>
                 </div>
@@ -73,20 +92,82 @@
                 </div>
                 <div class="row">
                   <div class="col-md-5">
-                    <span class="text-success">
-                      Birth Date: {{user.birthDate}}
+                    <span class="text-success">Birth Date: </span>
+                    <mat-form-field *ngIf="editModeEnabled">
+                      <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.birthDate}}
                     </span>
                   </div>
                   <div class="col-md-5">
-                    <span class="text-success">
-                      Gender: {{user.gender}}
+                    <span class="text-success">Gender: </span>
+                    <div *ngIf="editModeEnabled">
+                      <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1">Male</mat-radio-button>
+                        <mat-radio-button value="2">Female</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.gender}}
                     </span>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-5">
                     <span class="text-success">
-                      Address: {{user.address}}
+                      Address
+                    </span>
+                  </div>
+                </div>
+                <div *ngIf="user.address != null || editModeEnabled" class="row">
+                  <div class="col-md-5">
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      Block:
+                    </span>
+                    <mat-form-field *ngIf="editModeEnabled" class="user-profile-full-width">
+                      <input matInput placeholder="Block" />
+                    </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.address.blockNo}}
+                    </span>
+                  </div>
+                  <div class="col-md-5">
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      Unit:
+                    </span>
+                    <mat-form-field *ngIf="editModeEnabled" class="user-profile-full-width">
+                      <input matInput placeholder="Unit" />
+                    </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.address.unitNo}}
+                    </span>
+                  </div>
+                </div>
+                <div *ngIf="user.address != null || editModeEnabled" class="row">
+                  <div class="col-md-5">
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      Street:
+                    </span>
+                    <mat-form-field *ngIf="editModeEnabled" class="user-profile-full-width">
+                      <input matInput placeholder="Street" />
+                    </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.address.street}}
+                    </span>
+                  </div>
+                  <div class="col-md-5">
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      PostalCode:
+                    </span>
+                    <mat-form-field *ngIf="editModeEnabled" class="user-profile-full-width">
+                      <input matInput placeholder="PostalCode" />
+                    </mat-form-field>
+                    <span *ngIf="!editModeEnabled" class="text-success">
+                      {{user.address.postalCode}}
                     </span>
                   </div>
                 </div>
@@ -101,14 +182,14 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-5">
+                  <div class="col-md-12">
                     <span class="text-success">
-                      {{tutorAgency.promoText}}
+                      Introduction: {{tutorAgency.promoText}}
                     </span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-5">
+                  <div class="col-md-12">
                     <span class="text-success">
                       About Us: {{tutorAgency.aboutUs}}
                     </span>

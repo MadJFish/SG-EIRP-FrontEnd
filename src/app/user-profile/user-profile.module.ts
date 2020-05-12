@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { FileUploadModule } from 'ng2-file-upload';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { UserProfileRoutingModule } from './user-profile-routing.module';
 import { UserProfileComponent } from './user-profile.component';
@@ -10,7 +12,12 @@ import { UserProfileComponent } from './user-profile.component';
   imports: [
     CommonModule,
     UserProfileRoutingModule,
-    FileUploadModule
+    MatInputModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatRadioModule
+  ],
+  exports: [
   ],
   declarations: [UserProfileComponent]
 })

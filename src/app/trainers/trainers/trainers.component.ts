@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 
 import { first } from 'rxjs/operators';
 
-import { AuthenticationService } from 'app/_services';
+import { AuthenticationService, UserService } from 'app/_services';
 import { TutorAgencyService } from 'app/_services';
+import { UserResponseDto } from 'app/_models';
 
 @Component({
   selector: 'app-trainers',
@@ -20,6 +21,7 @@ export class TrainersComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private tutorAgencyService: TutorAgencyService,
+    private userService: UserService,
     private router: Router
   ) {
     // redirect to login if not logged in
@@ -29,18 +31,29 @@ export class TrainersComponent implements OnInit {
   }
 
   ngOnInit() {
-    // get all agencies
-    this.tutorAgencyService.getAllAgencies()
-        .pipe(first())
-        .subscribe(tutorAgencies => {
-          // get featured list
-          this.featuredAgencies = tutorAgencies.filter(ta =>
-            ta.featured
-            && tutorAgencies.indexOf(ta) < this.numberOfFeaturedToDisplay
-          );
-          
-          this.tutorAgencies = tutorAgencies;
-          console.log(JSON.stringify(this.tutorAgencies));
-        });
+      /*
+      // get current user profile
+      this.userService.getUser()
+          .subscribe((user: UserResponseDto) => {
+              this.user = user;
+              console.log(JSON.stringify(user));
+
+              this.retrieveAgency(this.user);
+          });
+      */
+
+      // get all agencies
+      this.tutorAgencyService.getAllAgencies()
+          .pipe(first())
+          .subscribe(tutorAgencies => {
+            // get featured list
+            this.featuredAgencies = tutorAgencies.filter(ta =>
+              ta.featured
+              && tutorAgencies.indexOf(ta) < this.numberOfFeaturedToDisplay
+            );
+            
+            this.tutorAgencies = tutorAgencies;
+            console.log(JSON.stringify(this.tutorAgencies));
+          });
   }
 }

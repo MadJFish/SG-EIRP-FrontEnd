@@ -32,11 +32,21 @@ export class TutorAgencyService {
         let api = CommonUtils.getTutorAPI(GloblConstants.tutorAgencyUrl);
         console.log("api is: " + api);
 
-        return this.http.get<any>(`${api}`, { params: {"tutorAgencyId": id} })
-            .pipe(map(response => {
+        return this.http.get<TutorAgencyDto>(`${api}`, { params: {"tutorAgencyId": id} })
+            .pipe(map((response:any) => {
                 console.log(response);
                 return response.body;
             }));
     }
 
+    saveAgency(tutorAgency: TutorAgencyDto): Observable<TutorAgencyDto> {
+        let api = CommonUtils.getTutorAPI(GloblConstants.saveTutorAgencyUrl);
+        console.log("api is: " + api);
+
+        return this.http.post<TutorAgencyDto>(`${api}`, tutorAgency)
+            .pipe(map((response:any) => {
+                console.log("response: " +JSON.stringify(response));
+                return response.body;
+            }));
+    }    
 }

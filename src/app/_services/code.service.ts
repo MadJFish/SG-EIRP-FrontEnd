@@ -14,6 +14,8 @@ export class CodeService {
     constructor(private http: HttpClient) { }
 
     getByType(type: string): Observable<Code[]> {
+        console.log("type: " + type);
+
         let api = CommonUtils.getTutorAPI(GloblConstants.getCodeByTypeUrl) + "?type=" + type;
     
         return this.http.get<Code[]>(`${api}`)

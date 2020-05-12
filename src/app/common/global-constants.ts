@@ -22,6 +22,7 @@ export class GloblConstants {
     public static loginURL: string = "/oauth/token";
     public static tutorRegisterationURL: string = "/api/registration/tutor";
     public static documentUploadURL: string = "/api/upload/document";
+    public static saveTutorAgencyUrl: string = "/api/tutorAgency/post";
 
     // GET
     public static getCodeByTypeUrl: string = "/api/code/getByType";
@@ -38,12 +39,14 @@ export class GloblConstants {
     // Constants
     public static educationLevelCodeType: string = "EducationLevel";
     public static subjectCodeType: string = "Subject";
+    public static locationCodeType: string = "Location";
 
     public static currentAccessToken = "CurrentAccessToken";
     public static currentUserProfile = "CurrentUserProfile";
 
     public static profileImage = "Profile Image";
     public static userUploadType = "user";
+    public static agencyUploadType = "agency";
 
     public static httpOptions = {
         headers: new HttpHeaders({

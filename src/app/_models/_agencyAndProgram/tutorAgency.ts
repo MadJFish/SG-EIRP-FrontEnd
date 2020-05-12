@@ -13,7 +13,7 @@ export class TutorAgencyDto {
     subjects: string[];
     locations: string[];
     
-    setValue(data: any) {
+    setNewValue(data: any) {
         this.name = data.agencyName;
         this.promoText = "";
         this.featured = false;
@@ -24,6 +24,31 @@ export class TutorAgencyDto {
         this.aboutUs = "";
         this.subjects = [];
         this.locations = [];
+    }
+
+    setContent(data: any) {
+        this.promoText = data.promoText;
+        this.phone = data.phone;
+        this.email = data.email;
+        this.aboutUs = data.aboutUs;
+        this.subjects = data.subjects;
+        this.targetEduLevels = data.educationLevels;
+        this.locations = data.locations;
+    }
+
+    copy(agencyDto: TutorAgencyDto) {
+        this.id = agencyDto.id;
+        this.name = agencyDto.name;
+        this.featured = agencyDto.featured;
+        this.promoText = agencyDto.promoText;
+        this.featured = agencyDto.featured;
+        this.targetEduLevels = agencyDto.targetEduLevels;
+        this.tutorAgencyDocuments = agencyDto.tutorAgencyDocuments;
+        this.phone = agencyDto.phone;
+        this.email = agencyDto.email;
+        this.aboutUs = agencyDto.aboutUs;
+        this.subjects = agencyDto.subjects;
+        this.locations = agencyDto.locations;
     }
 }
 
@@ -42,6 +67,6 @@ export class TutorEnrollRequestDto {
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.tutorAgent = new TutorAgencyDto();
-        this.tutorAgent.setValue(data);
+        this.tutorAgent.setNewValue(data);
     }
 }
