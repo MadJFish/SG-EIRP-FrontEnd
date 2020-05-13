@@ -8,6 +8,9 @@ phases:
       - TAG_NAME=erekjiang/sg-eirp-web
       - ARTIFACT=erekjiang/sg-eirp-web
       # installation
+      - apt-get update -y
+      - apt-get install -y software-properties-common
+      - apt-get update -y
       - echo installing nodejs...
       - curl -sL https://deb.nodesource.com/setup_12.x | bash -
       - apt-get install -y nodejs
