@@ -1,12 +1,14 @@
-version: 0.1
+version: 0.2
 
 phases:
   install:
     commands:
+      # variables
       - REPOSITORY_URI=https://hub.docker.com/repository/docker/erekjiang/sg-eirp-web
-      - ARTIFACT=erekjiang/sg-eirp-web
-      - echo installing nodejs...
       - TAG_NAME=erekjiang/sg-eirp-web
+      - ARTIFACT=erekjiang/sg-eirp-web
+      # installation
+      - echo installing nodejs...
       - curl -sL https://deb.nodesource.com/setup_12.x | bash -
       - apt-get install -y nodejs
       - echo installing yarn...
@@ -21,7 +23,8 @@ phases:
   build:
     commands:
       # - echo testing...
-      # - echo building...
+      - echo building...
+      - echo ls -lart
       - ng build
       - echo Building the Docker image... $TAG_NAME
       - docker build -f DockerFile -t $TAG_NAME .
