@@ -8,7 +8,8 @@ export class CommonUtils {
     }
 
     public static getTutorAPI(api: string) {
-        return GloblConstants.localTutorBaseUrl + GloblConstants.tutorUrl + api;
+        return GloblConstants.baseUrl + GloblConstants.tutorUrl + api;
+        // return GloblConstants.localTutorBaseUrl + GloblConstants.tutorUrl + api;
     }
 
     public static mapCodeValue(codes: Code[], values: boolean[]) {

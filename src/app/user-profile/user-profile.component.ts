@@ -18,6 +18,7 @@ export class UserProfileComponent implements OnInit {
   private user: UserResponseDto = new UserResponseDto();
   private tutorAgency: TutorAgencyDto = new TutorAgencyDto();
   private imagePath: string = "./assets/img/faces/marc.jpg";
+  private userRole: string;
 
   private editModeEnabled: boolean = false;
   private loading = false;
@@ -41,6 +42,7 @@ export class UserProfileComponent implements OnInit {
       this.userService.getUser()
           .subscribe((user: UserResponseDto) => {
               this.user = user;
+              this.userRole = user.role.roleDesc;
               console.log(JSON.stringify(user));
 
               this.retrieveAgency(this.user);
