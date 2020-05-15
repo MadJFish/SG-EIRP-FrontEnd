@@ -20,7 +20,11 @@ export const TUTOR_AGENT_ADMIN_ROUTES: RouteInfo[] = [
     { path: '/trainer-profile', title: 'Tutor Agent', icon:'person', class: '' },
 ];
 export const USER_ROUTES: RouteInfo[] = [
+    { path: '/school', title: 'School Data',  icon:'content_paste', class: '' },
+    { path: '/tutor-agent', title: 'Tutor Agent Management', icon:'bubble_chart', class: '' },
+    { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
     { path: '/program', title: 'Education Program',  icon:'library_books', class: '' },
+    { path: '/trainer-profile', title: 'Tutor Agent', icon:'person', class: '' },
 ];
 
 
@@ -62,14 +66,12 @@ export class NavbarComponent implements OnInit {
     }
 
     resetRouter() {
-        let userRole: string = this.userService.currentUserRoleValue;
+        let userRole: number = this.userService.role;
         let currentRouter: RouteInfo[];
-        if (userRole === "ROLE_SYSTEM_ADMIN") {
-            currentRouter = ADMIN_ROUTES;
-        } else if (userRole === "ROLE_TUTOR_USER") {
+        if (userRole == 2) {
             currentRouter = TUTOR_AGENT_ADMIN_ROUTES;
         } else {
-            currentRouter = USER_ROUTES;
+            currentRouter = ADMIN_ROUTES;
         }
 
         this.navItems = currentRouter.filter(navItem => navItem);

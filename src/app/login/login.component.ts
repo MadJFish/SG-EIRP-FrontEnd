@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../_services';
+import { AlertService, AuthenticationService, UserService } from '../_services';
 
 import { HttpClientModule, HttpHandler, HttpHeaders } from '@angular/common/http';
 
@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
+        private userService: UserService
 
     ) {
         // redirect to dashboard if already logged in
@@ -66,6 +67,12 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     console.log("login successfully: " + JSON.stringify(data));
+                    
+                    if (this.f.username.value === "Admin") {
+                        this.userService.role = 1;
+                    } else {
+                        this.userService.role = 2;
+                    }
                     // this.router.navigate([this.returnUrl]);
                     this.router.navigate(['/users-profile']);
                 },

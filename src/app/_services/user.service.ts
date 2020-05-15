@@ -21,6 +21,8 @@ export class UserService {
     private currentUserRoleSubject: BehaviorSubject<string>;
     private currentUserRole: Observable<string>;
 
+    public role: number;
+
     constructor(
         private http: HttpClient,
         private config: ConfigService) {
@@ -76,10 +78,13 @@ export class UserService {
                     // localStorage.setItem(GloblConstants.currentUserProfile, ) 
 
                     let userRole: string = null;
+
+                    /*
                     if (typeof userResponse.body.role.roleName) {
                         userRole = userResponse.body.role.roleName;
                         localStorage.setItem(GloblConstants.currentUserRole, userRole);
                     }
+                    */
                     
                     let userResponseDto = userResponse.body;
 
