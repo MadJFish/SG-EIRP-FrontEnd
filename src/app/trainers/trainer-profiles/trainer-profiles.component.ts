@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService, CodeService } from 'app/_services';
+import { UserService, CodeService, ProgramService } from 'app/_services';
 import { TutorAgencyService } from 'app/_services';
 import { fileUploadService } from 'app/_services';
-import { TutorAgencyDto, DocumentDto, Code, TutorAgencyDetailDto, EducationAgencyLeadershipDto } from 'app/_models';
+import { TutorAgencyDto, DocumentDto, Code, TutorAgencyDetailDto, EducationAgencyLeadershipDto, ProgramDto } from 'app/_models';
 import { GloblConstants } from 'app/common/global-constants';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { CommonUtils } from 'app/common/commonUtils';
@@ -20,10 +20,13 @@ export class TrainerProfilesComponent implements OnInit {
     // data binding
     private tutorAgency: TutorAgencyDto = new TutorAgencyDto();
     private tutorAgencyDetail: TutorAgencyDetailDto = new TutorAgencyDetailDto();
+    private programs: ProgramDto[];
     private profileImage: string;
     private managementImage: string;
+    private programImage: string;
     private profileImageDto: DocumentDto;
     private managementImageDto: DocumentDto;
+    private programImageDto: DocumentDto;
     private educationLevels: Code[];
     private subjects: Code[];
     private locations: Code[];
@@ -39,18 +42,22 @@ export class TrainerProfilesComponent implements OnInit {
 
     private editModeEnabled: boolean = false;
     private editManagementEnabled: boolean = false;
+    private editProgramEnabled: boolean = false;
     private loading = false;
 
     private leadershipTeams: EducationAgencyLeadershipDto[];
     private tempLeader: EducationAgencyLeadershipDto;
+    private tempProgram: ProgramDto;
 
     // form
     private agencyForm: FormGroup;
     private leaderForm: FormGroup;
+    private programForm: FormGroup;
 
     // native file upload
     private profileImageFiles: FileList;
     private managementImageFiles: FileList;
+    private programImageFiles: FileList;
     private photoFiles: FileList;
     private videoFiles: FileList;
     private referenceFiles: FileList;
@@ -66,6 +73,7 @@ export class TrainerProfilesComponent implements OnInit {
         private userService: UserService,
         private tutorAgencyService: TutorAgencyService,
         private fileUploadService: fileUploadService,
+        private programService: ProgramService,
         private formBuilder: FormBuilder
     ) {
     }
@@ -88,6 +96,12 @@ export class TrainerProfilesComponent implements OnInit {
             name: new FormControl(),
             designation: new FormControl(),
             description: new FormControl()
+        });
+
+        this.programForm = this.formBuilder.group({
+            name: new FormControl(),
+            subject: new FormControl(),
+            forEducationLevel: new FormControl(),
         });
 
         // get uesr id
@@ -196,7 +210,21 @@ export class TrainerProfilesComponent implements OnInit {
                 if (this.leadershipTeams == null) {
                     this.leadershipTeams = [];
                 }
+
+                // programs
+                this.programs = this.tutorAgencyDetail.programs;
+                this.programs.forEach(program => {
+                    if (!program.programImage) {
+                        program.programImage = "https://eirp-images.s3-ap-southeast-1.amazonaws.com/common/f0e27426-06ca-4aac-bdfe-e314dcb56acf/school.png";
+                    }
+                });
+                console.log("programs: " + JSON.stringify(this.programs));
+                if (this.programs == null) {
+                    this.programs = [];
+                }
             });
+
+        // programs;
 
     }
 
@@ -552,5 +580,90 @@ export class TrainerProfilesComponent implements OnInit {
             this.editManagementEnabled = false;
         }
         this.loading = false;
+    }
+
+    addProgram() {
+        this.loading = true;
+        if (!this.editProgramEnabled) {
+            this.editProgramEnabled = true;
+        }
+        this.loading = false;
+    }
+
+    saveProgram() {
+        this.loading = true;
+        
+        var updatedProgram = new ProgramDto();
+        updatedProgram.initialize();
+        if (this.tempProgram == null) {
+            this.tempProgram = new ProgramDto();
+            this.tempProgram.initialize();
+        }
+        updatedProgram.copy(this.tempProgram);
+
+        updatedProgram.setContent(this.programForm.value, this.tutorAgency.id);
+
+        console.log(this.tempProgram);
+        console.log(updatedProgram);
+
+        this.programService.saveProgram(updatedProgram)
+            .subscribe(program => {
+                console.log(program);
+                this.tempProgram = program;
+                this.saveProgramProfileImage(program);
+                if (this.editProgramEnabled) {
+                    this.editProgramEnabled = false;
+                }
+                this.loading = false;
+            });
+    }
+
+    saveProgramProfileImage(programDto: ProgramDto) {
+        if (programDto == null) {
+            console.log("test");
+            return;
+        }
+
+        console.log("#### save program document");
+
+        var file: File = this.programImageFiles.item(0);
+        if (this.programImageDto == null) {
+            this.programImageDto = new DocumentDto();
+        }
+
+        this.programImageDto.documentName = file.name;
+        this.programImageDto.documentType = GloblConstants.profileImage;
+        this.programImageDto.mime = file.type;
+        this.programImageDto.uploadType = GloblConstants.leadershipUploadType;
+        this.programImageDto.referenceId = programDto.programId;
+        this.fileUploadService.pushFileToStorage(file, this.programImageDto)
+            .subscribe(document => {
+                console.log(document);
+                this.programImageDto = document;
+            });
+    }
+
+    cancelProgram() {
+        this.loading = true;
+        if (this.editProgramEnabled) {
+            this.editProgramEnabled = false;
+        }
+        this.loading = false;
+    }
+
+    uploadProgramImage(event) {
+        this.programImageFiles = event.target.files;
+
+        // set dto
+        if (this.programImageDto == null) {
+            // for new program, upload to temp folder
+            this.fileUploadService.pushFileToTempStorage(this.programImageFiles.item(0))
+                .subscribe(response => {
+                    console.log(response);
+                    // this.managementImage = document;
+                    this.programImage = response;
+                });
+            
+        }
     }
 }

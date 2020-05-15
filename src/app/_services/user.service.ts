@@ -18,15 +18,25 @@ export class UserService {
     private currentUserSubject: BehaviorSubject<UserResponseDto>;
     private currentUser: Observable<UserResponseDto>;
 
+    private currentUserRoleSubject: BehaviorSubject<string>;
+    private currentUserRole: Observable<string>;
+
     constructor(
         private http: HttpClient,
         private config: ConfigService) {
         this.currentUserSubject = new BehaviorSubject<UserResponseDto>(JSON.parse(localStorage.getItem(GloblConstants.currentUserProfile)));
         this.currentUser = this.currentUserSubject.asObservable();
+
+        this.currentUserRoleSubject = new BehaviorSubject<string>(localStorage.getItem(GloblConstants.currentUserRole));
+        this.currentUserRole = this.currentUserRoleSubject.asObservable();
     }
 
     public get currentUserValue(): UserResponseDto {
         return this.currentUserSubject.value;
+    }
+
+    public get currentUserRoleValue(): string {
+        return this.currentUserRoleSubject.value;
     }
 
     getAll() {
@@ -64,6 +74,12 @@ export class UserService {
                     console.log("userResponse: " + JSON.stringify(userResponse));
                     // store current user profile in local storage 
                     // localStorage.setItem(GloblConstants.currentUserProfile, ) 
+
+                    let userRole: string = null;
+                    if (typeof userResponse.body.role.roleName) {
+                        userRole = userResponse.body.role.roleName;
+                        localStorage.setItem(GloblConstants.currentUserRole, userRole);
+                    }
                     
                     let userResponseDto = userResponse.body;
 

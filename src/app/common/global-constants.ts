@@ -25,6 +25,7 @@ export class GloblConstants {
     public static tempDocumentUploadUrl: string = "/api/upload/temp";
     public static saveTutorAgencyUrl: string = "/api/tutorAgency/post";
     public static saveTutorAgencyLeadership: string = "/api/tutorAgency/details/leadership/post";
+    public static saveProgramUrl: string = "/api/program/post";
 
     // GET
     public static getCodeByTypeUrl: string = "/api/code/getByType";
@@ -46,6 +47,7 @@ export class GloblConstants {
 
     public static currentAccessToken: string = "CurrentAccessToken";
     public static currentUserProfile: string = "CurrentUserProfile";
+    public static currentUserRole: string = "CurrentUserRole";
 
     public static profileImage: string = "Profile Image";
     public static photo: string = "Photo";
@@ -53,6 +55,7 @@ export class GloblConstants {
     public static attachment: string = "Attachment";
     public static userUploadType: string = "user";
     public static agencyUploadType: string = "agency";
+    public static programUploadType: string = "program";
     public static leadershipUploadType: string = "leadership";
 
     public static httpOptions = {

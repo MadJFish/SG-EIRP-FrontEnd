@@ -1,7 +1,7 @@
 ﻿export * from './_agencyAndProgram/educationAgencyBranch';
 export * from './_agencyAndProgram/educationAgencyDetails';
 export * from './_agencyAndProgram/educationAgencyLeadership';
-export * from './_agencyAndProgram/program';
+export * from './_agencyAndProgram/programDto';
 export * from './_agencyAndProgram/tutorAgency';
 
 export * from './_common/addressDto';

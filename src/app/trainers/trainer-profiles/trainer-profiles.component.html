@@ -125,6 +125,12 @@
                                   <div class="ripple-container"></div>
                               </a>
                           </li>
+                          <li class="nav-item">
+                            <a mat-button class="nav-link" href="#program" data-toggle="tab">
+                                <i class="material-icons">cloud</i> Program
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
                         </ul>
                     </div>
                 </div>
@@ -298,6 +304,71 @@
                               </tbody>
                           </table>
                       </form>
+                  </div>
+                  <div class="tab-pane" id="program">
+                    <form [formGroup]="programForm">
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let program of programs; let i=index">
+                                    <td style="width: 5%;">{{i+1}}</td>
+                                    <td style="width: 40%;"><img class="img" style="width:100px; height:100px;" [src]="program.programImage" /></td>
+                                    <td style="width: 20%;">{{program.programName}}</td>
+                                    <td style="width: 10%;">{{program.subject}}</td>
+                                    <td style="width: 10%;">{{program.forEducationLevel}}</td>
+                                    <td class="td-actions text-right">
+                                        <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" (click)="updateProgram(i)" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="editProgramEnabled">
+                                    <td style="width: 5%;"></td>
+                                    <td style="width: 40%;">
+                                        <div style="width: 100px; height: 100px;" (click)="programImageInput.click()">
+                                            <a>
+                                                <img style="width: 100px; height: 100px;" [src]="programImage" />
+                                                <input style="display: none" type="file" id="customProgramImage" (change)="uploadProgramImage($event)" #programImageInput>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="width: 10%;">
+                                        <mat-form-field>
+                                            <input matInput formControlName="name" placeholder="Name" />
+                                        </mat-form-field>
+                                    </td>
+                                    <td style="width: 10%;">
+                                        <mat-form-field>
+                                            <input matInput formControlName="subject" placeholder="Subject" />
+                                        </mat-form-field>
+                                    </td>
+                                    <td style="width: 30%;">
+                                        <mat-form-field>
+                                            <input matInput formControlName="forEducationLevel" placeholder="Education Level" />
+                                        </mat-form-field>
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <button mat-raised-button type="button" matTooltip="Cancel" [matTooltipPosition]="'above'" (click)="cancelProgram()" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="td-actions text-right">
+                                        <button mat-stroked-button *ngIf="!editProgramEnabled" color="primary" (click)="addProgram()">Add Program</button>
+                                        <button mat-stroked-button *ngIf="editProgramEnabled" color="primary" (click)="saveProgram()">Save Program</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
                   </div>
                 </div>
             </div>

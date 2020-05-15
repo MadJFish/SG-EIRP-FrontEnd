@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'app/_services';
+import { AuthenticationService, UserService } from 'app/_services';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -10,13 +10,19 @@ declare interface RouteInfo {
     icon: string;
     class: string;
 }
-export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
+export const ADMIN_ROUTES: RouteInfo[] = [
     { path: '/school', title: 'School Data',  icon:'content_paste', class: '' },
-    { path: '/program', title: 'Education Program',  icon:'library_books', class: '' },
-    { path: '/trainer-profile', title: 'Tutor Agent', icon:'person', class: '' },
     { path: '/tutor-agent', title: 'Tutor Agent Management', icon:'bubble_chart', class: '' },
 ];
+export const TUTOR_AGENT_ADMIN_ROUTES: RouteInfo[] = [
+    { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
+    { path: '/program', title: 'Education Program',  icon:'library_books', class: '' },
+    { path: '/trainer-profile', title: 'Tutor Agent', icon:'person', class: '' },
+];
+export const USER_ROUTES: RouteInfo[] = [
+    { path: '/program', title: 'Education Program',  icon:'library_books', class: '' },
+];
+
 
 @Component({
   selector: 'app-navbar',
@@ -35,24 +41,39 @@ export class NavbarComponent implements OnInit {
         location: Location,
         private element: ElementRef,
         private router: Router,
-        private authenticationServie: AuthenticationService) {
+        private authenticationServie: AuthenticationService,
+        private userService: UserService) {
         this.location = location;
         this.sidebarVisible = false;
     }
 
     ngOnInit(){
-        this.navItems = ROUTES.filter(navItem => navItem);
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
-      const navbar: HTMLElement = this.element.nativeElement;
-      this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-      this.router.events.subscribe((event) => {
+        this.resetRouter();
+        const navbar: HTMLElement = this.element.nativeElement;
+        this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+        this.router.events.subscribe((event) => {
         this.sidebarClose();
-         var $layer: any = document.getElementsByClassName('close-layer')[0];
-         if ($layer) {
-           $layer.remove();
-           this.mobile_menu_visible = 0;
-         }
+        var $layer: any = document.getElementsByClassName('close-layer')[0];
+        if ($layer) {
+        $layer.remove();
+        this.mobile_menu_visible = 0;
+        }
      });
+    }
+
+    resetRouter() {
+        let userRole: string = this.userService.currentUserRoleValue;
+        let currentRouter: RouteInfo[];
+        if (userRole === "ROLE_SYSTEM_ADMIN") {
+            currentRouter = ADMIN_ROUTES;
+        } else if (userRole === "ROLE_TUTOR_USER") {
+            currentRouter = TUTOR_AGENT_ADMIN_ROUTES;
+        } else {
+            currentRouter = USER_ROUTES;
+        }
+
+        this.navItems = currentRouter.filter(navItem => navItem);
+        this.listTitles = currentRouter.filter(listTitle => listTitle);
     }
 
     sidebarOpen() {
