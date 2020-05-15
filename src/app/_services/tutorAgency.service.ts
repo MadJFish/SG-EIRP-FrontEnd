@@ -5,7 +5,7 @@ import { TutorAgencyDto } from "app/_models/_agencyAndProgram/tutorAgency";
 import { CommonUtils } from "app/common/commonUtils";
 import { GloblConstants } from "app/common/global-constants";
 import { map } from "rxjs/operators";
-import { TutorAgencyDetailDto, EducationAgencyLeadershipDto } from "app/_models";
+import { TutorAgencyDetailDto, EducationAgencyLeadershipDto, ProgramDto } from "app/_models";
 
 @Injectable({ providedIn: 'root' })
 export class TutorAgencyService {
@@ -48,6 +48,16 @@ export class TutorAgencyService {
             .pipe(map((response:any) => {
                 console.log(response);
                 return response.body;
+            }));
+    }
+
+    getProgramByAgencyId(id: string): Observable<ProgramDto> {
+        let api = CommonUtils.getTutorAPI(GloblConstants.tutorAgencyDetailUrl);
+        console.log("api is: " + api);
+
+        return this.http.get<TutorAgencyDetailDto>(`${api}`, { params: {"tutorAgencyId": id} })
+            .pipe(map((response:any) => {
+                return response.body.programs[0];
             }));
     }
 

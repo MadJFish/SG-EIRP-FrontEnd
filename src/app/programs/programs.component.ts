@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TutorAgencyService, UserService } from 'app/_services';
+import { TutorAgencyDetailDto, ProgramDto } from 'app/_models';
 declare var $: any;
 @Component({
   selector: 'app-programs',
@@ -7,36 +9,35 @@ declare var $: any;
 })
 export class ProgramsComponent implements OnInit {
 
-  constructor() { }
-  showNotification(from, align){
-      const type = ['','info','success','warning','danger'];
+  private currentProgram: ProgramDto;
+  private title: string;
 
-      const color = Math.floor((Math.random() * 4) + 1);
+  constructor(
+    private tutorAgencyService: TutorAgencyService,
+    private userService: UserService,
+  ) { }
 
-      $.notify({
-          icon: "notifications",
-          message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
-
-      },{
-          type: type[color],
-          timer: 4000,
-          placement: {
-              from: from,
-              align: align
-          },
-          template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
-            '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-            '<i class="material-icons" data-notify="icon">notifications</i> ' +
-            '<span data-notify="title">{1}</span> ' +
-            '<span data-notify="message">{2}</span>' +
-            '<div class="progress" data-notify="progressbar">' +
-              '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-            '</div>' +
-            '<a href="{3}" target="{4}" data-notify="url"></a>' +
-          '</div>'
-      });
-  }
   ngOnInit() {
+
+      // get uesr id
+      const agencyId: string = this.userService.currentUserValue.tutorAgentId;
+
+      console.log(agencyId);
+
+      // agency details
+      this.tutorAgencyService.getProgramByAgencyId(agencyId)
+      .subscribe((programDto: ProgramDto) => {
+          // programs
+          this.currentProgram = programDto;
+          if (!this.currentProgram.programImage) {
+            this.currentProgram.programImage = "https://eirp-images.s3-ap-southeast-1.amazonaws.com/common/f0e27426-06ca-4aac-bdfe-e314dcb56acf/school.png";
+          }
+
+          this.title = this.currentProgram.programName;
+
+          console.log("programs: " + JSON.stringify(this.currentProgram));
+      });
+
   }
 
 }
